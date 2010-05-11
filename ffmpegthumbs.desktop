@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Service
+Name=Video Files (ffmpegthumbs)
+X-KDE-ServiceTypes=ThumbCreator
+MimeType=video/*;application/x-flash-video;application/vnd.ms-asf;application/vnd.rn-realmedia;
+X-KDE-Library=ffmpegthumbs
+ServiceTypes=ThumbCreator
+CacheThumbnail=true
+ThumbnailerVersion=2
+IgnoreMaximumSize=true

@@ -1,6 +1,10 @@
 [Desktop Entry]
 Type=Service
 Name=Video Files (ffmpegthumbs)
+Name[is]=Vídeóskrár (ffmpegthumbs)
+Name[pt]=Ficheiros de Vídeo (ffmpegthumbs)
+Name[sv]=Videofiler (ffmpeg miniatyrbilder)
+Name[uk]=Файли відео (ffmpegthumbs)
 Name[x-test]=xxVideo Files (ffmpegthumbs)xx
 X-KDE-ServiceTypes=ThumbCreator
 MimeType=video/*;application/x-flash-video;application/vnd.ms-asf;application/vnd.rn-realmedia;

@@ -2,7 +2,9 @@
 Type=Service
 Name=Video Files (ffmpegthumbs)
 Name[is]=Vídeóskrár (ffmpegthumbs)
+Name[nds]=Videodateien (ffmpeg-Vöransichten)
 Name[pt]=Ficheiros de Vídeo (ffmpegthumbs)
+Name[pt_BR]=Arquivos de vídeo (ffmpegthumbs)
 Name[sv]=Videofiler (ffmpeg miniatyrbilder)
 Name[uk]=Файли відео (ffmpegthumbs)
 Name[x-test]=xxVideo Files (ffmpegthumbs)xx

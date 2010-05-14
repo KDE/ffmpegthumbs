@@ -19,7 +19,6 @@
 #include "videoframe.h"
 #include <string>
 #include <inttypes.h>
-#include <QString>
 #include <QImage>
 namespace ffmpegthumbnailer
 {

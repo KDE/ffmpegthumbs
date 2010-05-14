@@ -18,7 +18,6 @@
 #include "ffmpegthumbnailer.h"
 
 #include <QCoreApplication>
-#include <QDir>
 #include <iostream>
 
 using namespace std;

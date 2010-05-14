@@ -25,7 +25,6 @@
 #include <cmath>
 #include <qglobal.h>
 #include <sys/stat.h>
-#include <QFileInfo>
 #include <QTime>
 
 

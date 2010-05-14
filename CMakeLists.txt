@@ -20,6 +20,8 @@ if (HAVE_FFMPEG_SWSCALE)
 	SET( CMAKE_CXX_FLAGS "-D FFMPEG_SWSCALE_API=1" )
 endif(HAVE_FFMPEG_SWSCALE)
 
+# Certain versions of FFMPEG need this to be defined
+SET( CMAKE_CXX_FLAGS "-D __STDC_CONSTANT_MACROS" )
 
 set( ffmpegthumbs_PART_SRCS
   ffmpegthumbnailer.cpp

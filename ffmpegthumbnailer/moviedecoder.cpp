@@ -17,6 +17,7 @@
 #include "moviedecoder.h"
 
 #include <kdebug.h>
+#include <QFileInfo>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -61,10 +62,10 @@ void MovieDecoder::initialize(const QString& filename)
     avcodec_init();
     avcodec_register_all();
 
-    QString inputFile = filename == "-" ? "pipe:" : filename;
+    QFileInfo fileInfo(filename);
 
-    if ((!m_FormatContextWasGiven) && av_open_input_file(&m_pFormatContext, inputFile.toLocal8Bit().data(), NULL, 0, NULL) != 0) {
-        kDebug() <<  "Could not open input file: " << filename;
+    if ((!m_FormatContextWasGiven) && av_open_input_file(&m_pFormatContext, fileInfo.absoluteFilePath().toUtf8().data(), NULL, 0, NULL) != 0) {
+        kDebug() <<  "Could not open input file: " << fileInfo.absoluteFilePath();
     }
 
     if (av_find_stream_info(m_pFormatContext) < 0) {

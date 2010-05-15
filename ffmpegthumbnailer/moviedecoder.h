@@ -50,7 +50,7 @@ public:
     MovieDecoder(const QString& filename, AVFormatContext* pavContext = NULL);
     ~MovieDecoder();
 
-    std::string getCodec();
+    QString getCodec();
     void seek(int timeInSeconds);
     void decodeVideoFrame();
     void getScaledVideoFrame(int scaledSize, bool maintainAspectRatio, VideoFrame& videoFrame);
@@ -61,6 +61,7 @@ public:
 
     void initialize(const QString& filename);
     void destroy();
+    bool getInitialized();
 
 private:
     void initializeVideo();
@@ -82,6 +83,7 @@ private:
     AVPacket*               m_pPacket;
     bool                    m_FormatContextWasGiven;
     bool                    m_AllowSeek;
+    bool                    m_initialized;
 };
 
 }

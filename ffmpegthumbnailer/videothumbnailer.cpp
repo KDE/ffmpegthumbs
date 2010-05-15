@@ -40,17 +40,15 @@ VideoThumbnailer::VideoThumbnailer()
         , m_SeekPercentage(10)
         , m_OverlayFilmStrip(false)
         , m_WorkAroundIssues(false)
-        , m_ImageQuality(8)
         , m_MaintainAspectRatio(true)
         , m_SmartFrameSelection(false)
 {
 }
 
-VideoThumbnailer::VideoThumbnailer(int thumbnailSize, bool workaroundIssues, bool maintainAspectRatio, int imageQuality, bool smartFrameSelection)
+VideoThumbnailer::VideoThumbnailer(int thumbnailSize, bool workaroundIssues, bool maintainAspectRatio, bool smartFrameSelection)
         : m_ThumbnailSize(thumbnailSize)
         , m_SeekPercentage(10)
         , m_WorkAroundIssues(workaroundIssues)
-        , m_ImageQuality(imageQuality)
         , m_MaintainAspectRatio(maintainAspectRatio)
         , m_SmartFrameSelection(smartFrameSelection)
 {
@@ -81,11 +79,6 @@ void VideoThumbnailer::setWorkAroundIssues(bool workAround)
     m_WorkAroundIssues = workAround;
 }
 
-void VideoThumbnailer::setImageQuality(int imageQuality)
-{
-    m_ImageQuality = imageQuality;
-}
-
 void VideoThumbnailer::setMaintainAspectRatio(bool enabled)
 {
     m_MaintainAspectRatio = enabled;
@@ -104,23 +97,25 @@ int timeToSeconds(const QString& time)
 void VideoThumbnailer::generateThumbnail(const QString& videoFile, ImageWriter& imageWriter, QImage &image)
 {
     MovieDecoder movieDecoder(videoFile, NULL);
-    movieDecoder.decodeVideoFrame(); //before seeking, a frame has to be decoded
-
-    if ((!m_WorkAroundIssues) || (movieDecoder.getCodec() != "h264")) { //workaround for bug in older ffmpeg (100% cpu usage when seeking in h264 files)
-        int secondToSeekTo = m_SeekTime.isEmpty() ? movieDecoder.getDuration() * m_SeekPercentage / 100 : timeToSeconds(m_SeekTime);
-        movieDecoder.seek(secondToSeekTo);
+    if (movieDecoder.getInitialized()) {
+        movieDecoder.decodeVideoFrame(); //before seeking, a frame has to be decoded
+        
+        if ((!m_WorkAroundIssues) || (movieDecoder.getCodec() != "h264")) { //workaround for bug in older ffmpeg (100% cpu usage when seeking in h264 files)
+            int secondToSeekTo = m_SeekTime.isEmpty() ? movieDecoder.getDuration() * m_SeekPercentage / 100 : timeToSeconds(m_SeekTime);
+            movieDecoder.seek(secondToSeekTo);
+        }
+    
+        VideoFrame videoFrame;
+        
+        if (m_SmartFrameSelection) {
+            generateSmartThumbnail(movieDecoder, videoFrame);
+        } else {
+            movieDecoder.getScaledVideoFrame(m_ThumbnailSize, m_MaintainAspectRatio, videoFrame);
+        }
+        
+        applyFilters(videoFrame);
+        imageWriter.writeFrame(videoFrame, image);
     }
-
-    VideoFrame videoFrame;
-
-    if (m_SmartFrameSelection) {
-        generateSmartThumbnail(movieDecoder, videoFrame);
-    } else {
-        movieDecoder.getScaledVideoFrame(m_ThumbnailSize, m_MaintainAspectRatio, videoFrame);
-    }
-
-    applyFilters(videoFrame);
-    imageWriter.writeFrame(videoFrame, image);
 }
 
 void VideoThumbnailer::generateSmartThumbnail(MovieDecoder& movieDecoder, VideoFrame& videoFrame)
@@ -140,15 +135,12 @@ void VideoThumbnailer::generateSmartThumbnail(MovieDecoder& movieDecoder, VideoF
     videoFrame = videoFrames[bestFrame];
 }
 
-
 void VideoThumbnailer::generateThumbnail(const QString& videoFile, QImage &image)
 {
     ImageWriter* imageWriter = new  ImageWriter();
     generateThumbnail(videoFile, *imageWriter, image);
     delete imageWriter;
 }
-
-
 
 void VideoThumbnailer::addFilter(IFilter* filter)
 {

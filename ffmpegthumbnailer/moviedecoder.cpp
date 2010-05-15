@@ -46,7 +46,8 @@ MovieDecoder::MovieDecoder(const QString& filename, AVFormatContext* pavContext)
         , m_pFrameBuffer(NULL)
         , m_pPacket(NULL)
         , m_FormatContextWasGiven(pavContext != NULL)
-        , m_AllowSeek(filename != "-")
+        , m_AllowSeek(true)
+        , m_initialized(false)
 {
     initialize(filename);
 }
@@ -66,15 +67,27 @@ void MovieDecoder::initialize(const QString& filename)
 
     if ((!m_FormatContextWasGiven) && av_open_input_file(&m_pFormatContext, fileInfo.absoluteFilePath().toUtf8().data(), NULL, 0, NULL) != 0) {
         kDebug() <<  "Could not open input file: " << fileInfo.absoluteFilePath();
+        return;
     }
 
     if (av_find_stream_info(m_pFormatContext) < 0) {
         kDebug() << "Could not find stream information";
+        return;
     }
 
     initializeVideo();
     m_pFrame = avcodec_alloc_frame();
+
+    if (m_pFrame) {
+        m_initialized=true;
+    }
 }
+
+bool MovieDecoder::getInitialized()
+{
+    return m_initialized;
+}
+
 
 void MovieDecoder::destroy()
 {
@@ -105,13 +118,13 @@ void MovieDecoder::destroy()
     }
 }
 
-string MovieDecoder::getCodec()
+QString MovieDecoder::getCodec()
 {
+    QString codecName;
     if (m_pVideoCodec) {
-        return m_pVideoCodec->name;
+        codecName=QString(m_pVideoCodec->name);
     }
-
-    return "";
+    return codecName;
 }
 
 void MovieDecoder::initializeVideo()

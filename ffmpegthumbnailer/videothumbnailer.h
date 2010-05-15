@@ -39,7 +39,7 @@ class VideoThumbnailer
 {
 public:
     VideoThumbnailer();
-    VideoThumbnailer(int thumbnailSize, bool workaroundIssues, bool maintainAspectRatio, int imageQuality, bool smartFrameSelection);
+    VideoThumbnailer(int thumbnailSize, bool workaroundIssues, bool maintainAspectRatio, bool smartFrameSelection);
     ~VideoThumbnailer();
 
     void generateThumbnail(const QString& videoFile, QImage &image);
@@ -48,7 +48,6 @@ public:
     void setSeekPercentage(int percentage);
     void setSeekTime(const QString& seekTime);
     void setWorkAroundIssues(bool workAround);
-    void setImageQuality(int imageQuality);
     void setMaintainAspectRatio(bool enabled);
     void setSmartFrameSelection(bool enabled);
     void addFilter(IFilter* filter);
@@ -71,7 +70,6 @@ private:
     uint16_t                    m_SeekPercentage;
     bool                        m_OverlayFilmStrip;
     bool                        m_WorkAroundIssues;
-    int                         m_ImageQuality;
     bool                        m_MaintainAspectRatio;
     bool                        m_SmartFrameSelection;
     QString                     m_SeekTime;

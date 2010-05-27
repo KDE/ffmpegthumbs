@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Video Files (ffmpegthumbs)
+Name[ca]=Fitxers de vídeo (ffmpegthumbs)
 Name[cs]=Soubory videa (ffmpegthumbs)
 Name[da]=Videofiler (ffmpegthumbs)
 Name[de]=Videodateien (ffmpegthumbs)
@@ -12,6 +13,7 @@ Name[nl]=Videobestanden (ffmpeg-miniaturen)
 Name[pt]=Ficheiros de Vídeo (ffmpegthumbs)
 Name[pt_BR]=Arquivos de vídeo (ffmpegthumbs)
 Name[sv]=Videofiler (ffmpeg miniatyrbilder)
+Name[th]=แฟ้มวีดิโอ (ffmpegthumbs)
 Name[uk]=Файли відео (ffmpegthumbs)
 Name[x-test]=xxVideo Files (ffmpegthumbs)xx
 Name[zh_TW]=影像檔 (ffmpegthumbs)

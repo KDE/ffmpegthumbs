@@ -2,6 +2,7 @@
 Type=Service
 Name=Video Files (ffmpegthumbs)
 Name[ca]=Fitxers de vídeo (ffmpegthumbs)
+Name[ca@valencia]=Fitxers de vídeo (ffmpegthumbs)
 Name[cs]=Soubory videa (ffmpegthumbs)
 Name[da]=Videofiler (ffmpegthumbs)
 Name[de]=Videodateien (ffmpegthumbs)

@@ -91,7 +91,7 @@ void VideoThumbnailer::setSmartFrameSelection(bool enabled)
 
 int timeToSeconds(const QString& time)
 {
-    return QTime::fromString(time, "hh:mm:ss").secsTo(QTime(0, 0, 0));
+    return QTime::fromString(time, QLatin1String("hh:mm:ss")).secsTo(QTime(0, 0, 0));
 }
 
 void VideoThumbnailer::generateThumbnail(const QString& videoFile, ImageWriter& imageWriter, QImage &image)
@@ -100,7 +100,7 @@ void VideoThumbnailer::generateThumbnail(const QString& videoFile, ImageWriter& 
     if (movieDecoder.getInitialized()) {
         movieDecoder.decodeVideoFrame(); //before seeking, a frame has to be decoded
         
-        if ((!m_WorkAroundIssues) || (movieDecoder.getCodec() != "h264")) { //workaround for bug in older ffmpeg (100% cpu usage when seeking in h264 files)
+        if ((!m_WorkAroundIssues) || (movieDecoder.getCodec() != QLatin1String("h264"))) { //workaround for bug in older ffmpeg (100% cpu usage when seeking in h264 files)
             int secondToSeekTo = m_SeekTime.isEmpty() ? movieDecoder.getDuration() * m_SeekPercentage / 100 : timeToSeconds(m_SeekTime);
             movieDecoder.seek(secondToSeekTo);
         }

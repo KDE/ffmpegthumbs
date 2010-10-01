@@ -122,7 +122,7 @@ QString MovieDecoder::getCodec()
 {
     QString codecName;
     if (m_pVideoCodec) {
-        codecName=QString(m_pVideoCodec->name);
+        codecName=QString::fromLatin1(m_pVideoCodec->name);
     }
     return codecName;
 }

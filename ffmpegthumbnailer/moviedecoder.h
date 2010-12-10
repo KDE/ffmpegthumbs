@@ -17,29 +17,13 @@
 #ifndef MOVIEDECODER_H
 #define MOVIEDECODER_H
 
-#include <string>
-#include <vector>
-
 #include "videoframe.h"
-
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include <QString>
 
 extern "C" {
-#ifdef FFMPEG_AVCODEC_API
-#include <ffmpeg/avcodec.h>
-#else
 #include <libavcodec/avcodec.h>
-#endif
-#ifdef FFMPEG_AVFORMAT_API
-#include <ffmpeg/avformat.h>
-#else
 #include <libavformat/avformat.h>
-#endif
 }
-
-#include <QString>
 
 namespace ffmpegthumbnailer
 {
@@ -69,7 +53,7 @@ private:
     bool decodeVideoPacket();
     bool getVideoPacket();
     void convertAndScaleFrame(PixelFormat format, int scaledSize, bool maintainAspectRatio, int& scaledWidth, int& scaledHeight);
-    void createAVFrame(AVFrame** avFrame, uint8_t** frameBuffer, int width, int height, PixelFormat format);
+    void createAVFrame(AVFrame** avFrame, quint8** frameBuffer, int width, int height, PixelFormat format);
     void calculateDimensions(int squareSize, bool maintainAspectRatio, int& destWidth, int& destHeight);
 
 private:
@@ -79,7 +63,7 @@ private:
     AVCodec*                m_pVideoCodec;
     AVStream*               m_pVideoStream;
     AVFrame*                m_pFrame;
-    uint8_t*                m_pFrameBuffer;
+    quint8*                 m_pFrameBuffer;
     AVPacket*               m_pPacket;
     bool                    m_FormatContextWasGiven;
     bool                    m_AllowSeek;

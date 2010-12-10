@@ -19,6 +19,7 @@
 
 #include <inttypes.h>
 #include <vector>
+#include <QtGlobal>
 
 namespace ffmpegthumbnailer
 {
@@ -34,7 +35,7 @@ struct VideoFrame {
     int height;
     int lineSize;
 
-    std::vector<uint8_t> frameData;
+    std::vector<quint8> frameData;
 };
 
 }

@@ -4,15 +4,6 @@ include_directories(
     ${FFMPEG_INCLUDE_DIR}
     )
 
-if (FFMPEG_INCLUDE_DIR_OLD_STYLE)
-    SET( CMAKE_CXX_FLAGS "-D FFMPEG_AVFORMAT_API=1" )
-    SET( CMAKE_CXX_FLAGS "-D FFMPEG_AVCODEC_API=1" )
-endif(FFMPEG_INCLUDE_DIR_OLD_STYLE)
-
-if (SWSCALE_INCLUDE_DIR)
-    SET( CMAKE_CXX_FLAGS "-D FFMPEG_SWSCALE_API=1" )
-endif(SWSCALE_INCLUDE_DIR)
-
 # Certain versions of FFMPEG need this to be defined
 SET( CMAKE_CXX_FLAGS "-D __STDC_CONSTANT_MACROS" )
 
@@ -26,11 +17,9 @@ set( ffmpegthumbs_PART_SRCS
 
 kde4_add_plugin(ffmpegthumbs ${ffmpegthumbs_PART_SRCS})
 
-
 target_link_libraries(ffmpegthumbs  ${KDE4_KIO_LIBS} ${AVUTIL_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} )
 
 install(TARGETS ffmpegthumbs DESTINATION ${PLUGIN_INSTALL_DIR})
-
 
 ########### install files ###############
 

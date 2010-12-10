@@ -67,7 +67,7 @@ private:
 
 private:
     int                         m_ThumbnailSize;
-    uint16_t                    m_SeekPercentage;
+    quint16                     m_SeekPercentage;
     bool                        m_OverlayFilmStrip;
     bool                        m_WorkAroundIssues;
     bool                        m_MaintainAspectRatio;

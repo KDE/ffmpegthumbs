@@ -19,16 +19,8 @@
 #include <kdebug.h>
 #include <QFileInfo>
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 extern "C" {
-#ifdef FFMPEG_SWSCALE_API
-#include <ffmpeg/swscale.h>
-#else
 #include <libswscale/swscale.h>
-#endif
 }
 
 using namespace std;
@@ -192,7 +184,7 @@ void MovieDecoder::seek(int timeInSeconds)
         return;
     }
 
-    int64_t timestamp = AV_TIME_BASE * static_cast<int64_t>(timeInSeconds);
+    qint64 timestamp = AV_TIME_BASE * static_cast<qint64>(timeInSeconds);
 
     if (timestamp < 0) {
         timestamp = 0;
@@ -250,7 +242,7 @@ bool MovieDecoder::decodeVideoPacket()
 
     avcodec_get_frame_defaults(m_pFrame);
 
-    int frameFinished;
+    int frameFinished = 0;
 
 #if LIBAVCODEC_VERSION_MAJOR < 53
     int bytesDecoded = avcodec_decode_video(m_pVideoCodecContext, m_pFrame, &frameFinished, m_pPacket->data, m_pPacket->size);
@@ -364,12 +356,12 @@ void MovieDecoder::calculateDimensions(int squareSize, bool maintainAspectRatio,
     }
 }
 
-void MovieDecoder::createAVFrame(AVFrame** avFrame, uint8_t** frameBuffer, int width, int height, PixelFormat format)
+void MovieDecoder::createAVFrame(AVFrame** avFrame, quint8** frameBuffer, int width, int height, PixelFormat format)
 {
     *avFrame = avcodec_alloc_frame();
 
     int numBytes = avpicture_get_size(format, width, height);
-    *frameBuffer = reinterpret_cast<uint8_t*>(av_malloc(numBytes));
+    *frameBuffer = reinterpret_cast<quint8*>(av_malloc(numBytes));
     avpicture_fill((AVPicture*) *avFrame, *frameBuffer, format, width, height);
 }
 

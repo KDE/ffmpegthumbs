@@ -1,4 +1,15 @@
+find_package(Qt4 REQUIRED)
+find_package(KDE4 REQUIRED)
+include(KDE4Defaults)
+include(MacroLibrary)
+
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
+
 include_directories(
+    ${QT_INCLUDES}
+    ${KDE4_INCLUDES}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${PC_AVCODEC_INCLUDEDIR}
     ${PC_AVFORMAT_INCLUDEDIR}

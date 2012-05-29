@@ -52,12 +52,11 @@ MovieDecoder::~MovieDecoder()
 void MovieDecoder::initialize(const QString& filename)
 {
     av_register_all();
-    avcodec_init();
     avcodec_register_all();
 
     QFileInfo fileInfo(filename);
 
-    if ((!m_FormatContextWasGiven) && av_open_input_file(&m_pFormatContext, fileInfo.absoluteFilePath().toUtf8().data(), NULL, 0, NULL) != 0) {
+    if ((!m_FormatContextWasGiven) && avformat_open_input(&m_pFormatContext, fileInfo.absoluteFilePath().toLocal8Bit().data(), NULL, NULL) != 0) {
         kDebug() <<  "Could not open input file: " << fileInfo.absoluteFilePath();
         return;
     }

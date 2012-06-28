@@ -15,7 +15,7 @@ include_directories(
     )
 
 # Certain versions of FFMPEG need this to be defined
-SET( CMAKE_CXX_FLAGS "-D __STDC_CONSTANT_MACROS" )
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D __STDC_CONSTANT_MACROS")
 
 set( ffmpegthumbs_PART_SRCS
   ffmpegthumbnailer.cpp

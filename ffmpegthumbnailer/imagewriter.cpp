@@ -31,7 +31,7 @@ ImageWriter::ImageWriter()
 void ImageWriter::writeFrame(VideoFrame& frame,  QImage& image)
 {
     QImage previewImage(frame.width, frame.height, QImage::Format_RGB888);
-    for (int y = 0; y < frame.height; y++) {
+    for (quint32 y = 0; y < frame.height; y++) {
         // Copy each line ..
         memcpy(previewImage.scanLine(y), &frame.frameData[y*frame.lineSize], frame.width*3);
     }

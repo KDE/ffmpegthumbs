@@ -31,9 +31,9 @@ struct VideoFrame {
     VideoFrame(int width, int height, int lineSize)
             : width(width), height(height), lineSize(lineSize) {}
 
-    int width;
-    int height;
-    int lineSize;
+    quint32 width;
+    quint32 height;
+    quint32 lineSize;
 
     std::vector<quint8> frameData;
 };

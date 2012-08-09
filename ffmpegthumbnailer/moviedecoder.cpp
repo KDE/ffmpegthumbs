@@ -61,7 +61,7 @@ void MovieDecoder::initialize(const QString& filename)
         return;
     }
 
-    if (av_find_stream_info(m_pFormatContext) < 0) {
+    if (avformat_find_stream_info(m_pFormatContext, 0) < 0) {
         kDebug() << "Could not find stream information";
         return;
     }
@@ -88,7 +88,7 @@ void MovieDecoder::destroy()
     }
 
     if ((!m_FormatContextWasGiven) && m_pFormatContext) {
-        av_close_input_file(m_pFormatContext);
+        avformat_close_input(&m_pFormatContext);
         m_pFormatContext = NULL;
     }
 
@@ -145,7 +145,7 @@ void MovieDecoder::initializeVideo()
 
     m_pVideoCodecContext->workaround_bugs = 1;
 
-    if (avcodec_open(m_pVideoCodecContext, m_pVideoCodec) < 0) {
+    if (avcodec_open2(m_pVideoCodecContext, m_pVideoCodec, 0) < 0) {
         kDebug() << "Could not open video codec";
     }
 }

@@ -16,7 +16,7 @@
 
 #include "moviedecoder.h"
 
-#include <kdebug.h>
+#include <QDebug>
 #include <QFileInfo>
 
 extern "C" {
@@ -57,12 +57,12 @@ void MovieDecoder::initialize(const QString& filename)
     QFileInfo fileInfo(filename);
 
     if ((!m_FormatContextWasGiven) && avformat_open_input(&m_pFormatContext, fileInfo.absoluteFilePath().toLocal8Bit().data(), NULL, NULL) != 0) {
-        kDebug() <<  "Could not open input file: " << fileInfo.absoluteFilePath();
+        qDebug() <<  "Could not open input file: " << fileInfo.absoluteFilePath();
         return;
     }
 
     if (avformat_find_stream_info(m_pFormatContext, 0) < 0) {
-        kDebug() << "Could not find stream information";
+        qDebug() << "Could not find stream information";
         return;
     }
 
@@ -129,7 +129,7 @@ void MovieDecoder::initializeVideo()
     }
 
     if (m_VideoStream == -1) {
-        kDebug() << "Could not find video stream";
+        qDebug() << "Could not find video stream";
         return;
     }
 
@@ -139,14 +139,14 @@ void MovieDecoder::initializeVideo()
     if (m_pVideoCodec == NULL) {
         // set to NULL, otherwise avcodec_close(m_pVideoCodecContext) crashes
         m_pVideoCodecContext = NULL;
-        kDebug() << "Video Codec not found";
+        qDebug() << "Video Codec not found";
         return;
     }
 
     m_pVideoCodecContext->workaround_bugs = 1;
 
     if (avcodec_open2(m_pVideoCodecContext, m_pVideoCodec, 0) < 0) {
-        kDebug() << "Could not open video codec";
+        qDebug() << "Could not open video codec";
     }
 }
 
@@ -193,7 +193,7 @@ void MovieDecoder::seek(int timeInSeconds)
     if (ret >= 0) {
         avcodec_flush_buffers(m_pFormatContext->streams[m_VideoStream]->codec);
     } else {
-        kDebug() << "Seeking in video failed";
+        qDebug() << "Seeking in video failed";
         return;
     }
 
@@ -214,7 +214,7 @@ void MovieDecoder::seek(int timeInSeconds)
     } while ((!gotFrame || !m_pFrame->key_frame) && keyFrameAttempts < 200);
 
     if (gotFrame == 0) {
-        kDebug() << "Seeking in video failed";
+        qDebug() << "Seeking in video failed";
     }
 }
 
@@ -228,7 +228,7 @@ void MovieDecoder::decodeVideoFrame()
     }
 
     if (!frameFinished) {
-        kDebug() << "decodeVideoFrame() failed: frame not finished";
+        qDebug() << "decodeVideoFrame() failed: frame not finished";
         return;
     }
 }
@@ -250,7 +250,7 @@ bool MovieDecoder::decodeVideoPacket()
 #endif
 
     if (bytesDecoded < 0) {
-        kDebug() << "Failed to decode video frame: bytesDecoded < 0";
+        qDebug() << "Failed to decode video frame: bytesDecoded < 0";
     }
 
     return (frameFinished > 0);
@@ -310,7 +310,7 @@ void MovieDecoder::convertAndScaleFrame(PixelFormat format, int scaledSize, bool
                                format, SWS_BICUBIC, NULL, NULL, NULL);
 
     if (NULL == scaleContext) {
-        kDebug() << "Failed to create resize context";
+        qDebug() << "Failed to create resize context";
         return;
     }
 

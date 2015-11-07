@@ -1,13 +1,22 @@
-find_package(KDE4 REQUIRED)
-include(KDE4Defaults)
-include(MacroLibrary)
+project(ffmpegthumbs)
 
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+set(QT_MIN_VERSION "5.2.0")
 
+find_package(ECM 1.0.0 REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+include(FeatureSummary)
+include(WriteBasicConfigVersionFile)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings)
+
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Gui)
+find_package(KF5 REQUIRED COMPONENTS KIO)
 find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
 
 include_directories(
-    ${KDE4_INCLUDES}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${PC_AVCODEC_INCLUDEDIR}
     ${PC_AVFORMAT_INCLUDEDIR}
@@ -25,9 +34,9 @@ set( ffmpegthumbs_PART_SRCS
   ffmpegthumbnailer/videothumbnailer.cpp
 )
 
-kde4_add_plugin(ffmpegthumbs ${ffmpegthumbs_PART_SRCS})
+add_library(ffmpegthumbs MODULE ${ffmpegthumbs_PART_SRCS})
 
-target_link_libraries(ffmpegthumbs  ${KDE4_KIO_LIBS} ${AVUTIL_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} )
+target_link_libraries(ffmpegthumbs Qt5::Gui KF5::KIOWidgets ${AVUTIL_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} )
 
 install(TARGETS ffmpegthumbs DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -35,6 +44,6 @@ install(TARGETS ffmpegthumbs DESTINATION ${PLUGIN_INSTALL_DIR})
 
 install(FILES  ffmpegthumbs.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-if (KDE4_BUILD_TESTS)
-	add_subdirectory(tests)
-endif (KDE4_BUILD_TESTS)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()

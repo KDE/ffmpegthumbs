@@ -15,12 +15,11 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "ffmpegthumbnailer.h"
-#include <kdebug.h>
 #include <QImage>
 
 extern "C"
 {
-    KDE_EXPORT ThumbCreator* new_creator()
+    Q_DECL_EXPORT ThumbCreator *new_creator()
     {
         return new FFMpegThumbnailer();
     }

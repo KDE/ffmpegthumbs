@@ -23,6 +23,9 @@
 extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
+#include <libavfilter/avfilter.h>
+#include <libavfilter/buffersrc.h>
+#include <libavfilter/buffersink.h>
 }
 
 namespace ffmpegthumbnailer
@@ -52,9 +55,13 @@ private:
 
     bool decodeVideoPacket();
     bool getVideoPacket();
-    void convertAndScaleFrame(PixelFormat format, int scaledSize, bool maintainAspectRatio, int& scaledWidth, int& scaledHeight);
-    void createAVFrame(AVFrame** avFrame, quint8** frameBuffer, int width, int height, PixelFormat format);
+    void convertAndScaleFrame(AVPixelFormat format, int scaledSize, bool maintainAspectRatio, int& scaledWidth, int& scaledHeight);
+    void createAVFrame(AVFrame** avFrame, quint8** frameBuffer, int width, int height, AVPixelFormat format);
     void calculateDimensions(int squareSize, bool maintainAspectRatio, int& destWidth, int& destHeight);
+
+    void deleteFilterGraph();
+    bool initFilterGraph(enum AVPixelFormat pixfmt, int width, int height);
+    bool processFilterGraph(AVPicture *dst, const AVPicture *src, enum AVPixelFormat pixfmt, int width, int height);
 
 private:
     int                     m_VideoStream;
@@ -68,6 +75,13 @@ private:
     bool                    m_FormatContextWasGiven;
     bool                    m_AllowSeek;
     bool                    m_initialized;
+    AVFilterContext*        m_bufferSinkContext;
+    AVFilterContext*        m_bufferSourceContext;
+    AVFilterGraph*          m_filterGraph;
+    AVFrame*                m_filterFrame;
+    int                     m_lastWidth;
+    int                     m_lastHeight;
+    enum AVPixelFormat      m_lastPixfmt;
 };
 
 }

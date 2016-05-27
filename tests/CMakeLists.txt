@@ -19,7 +19,7 @@ set(ffmpegthumbtest_SRCS ffmpegthumbtest.cpp
 
 add_executable(ffmpegthumbtest ${ffmpegthumbtest_SRCS} )
 
-target_link_libraries(ffmpegthumbtest Qt5::Gui KF5::KIOWidgets ${AVUTIL_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES})
+target_link_libraries(ffmpegthumbtest Qt5::Gui KF5::KIOWidgets ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES})
 
 
 

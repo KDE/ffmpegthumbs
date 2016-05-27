@@ -36,7 +36,7 @@ set( ffmpegthumbs_PART_SRCS
 
 add_library(ffmpegthumbs MODULE ${ffmpegthumbs_PART_SRCS})
 
-target_link_libraries(ffmpegthumbs Qt5::Gui KF5::KIOWidgets ${AVUTIL_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} )
+target_link_libraries(ffmpegthumbs Qt5::Gui KF5::KIOWidgets ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} )
 
 install(TARGETS ffmpegthumbs DESTINATION ${PLUGIN_INSTALL_DIR})
 

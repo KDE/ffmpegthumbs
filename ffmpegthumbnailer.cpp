@@ -50,6 +50,6 @@ bool FFMpegThumbnailer::create(const QString& path, int width, int /*heigth*/, Q
 
 ThumbCreator::Flags FFMpegThumbnailer::flags() const
 {
-    return (Flags)(DrawFrame);
+    return (Flags)(None);
 }
 

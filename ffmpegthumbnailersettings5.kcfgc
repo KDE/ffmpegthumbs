@@ -1,0 +1,4 @@
+File=ffmpegthumbnailersettings5.kcfg
+ClassName=FFMpegThumbnailerSettings
+Singleton=true
+Mutators=true

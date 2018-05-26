@@ -31,6 +31,8 @@ public:
     virtual ~FFMpegThumbnailer();
     virtual bool create(const QString& path, int width, int height, QImage& img);
     virtual Flags flags() const;
+    virtual QWidget* createConfigurationWidget() override;
+    virtual void writeConfiguration(const QWidget* configurationWidget) override;
 private:
     ffmpegthumbnailer::VideoThumbnailer m_Thumbnailer;
     ffmpegthumbnailer::FilmStripFilter  m_FilmStrip;

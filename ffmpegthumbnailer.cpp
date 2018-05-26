@@ -15,7 +15,11 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "ffmpegthumbnailer.h"
+#include "ffmpegthumbnailersettings5.h"
+
 #include <QImage>
+#include <QCheckBox>
+#include <KLocalizedString>
 
 extern "C"
 {
@@ -28,7 +32,10 @@ extern "C"
 
 FFMpegThumbnailer::FFMpegThumbnailer()
 {
-    m_Thumbnailer.addFilter(&m_FilmStrip);
+    FFMpegThumbnailerSettings* settings = FFMpegThumbnailerSettings::self();
+    if (settings->filmstrip()) {
+        m_Thumbnailer.addFilter(&m_FilmStrip);
+    }
 }
 
 FFMpegThumbnailer::~FFMpegThumbnailer()
@@ -53,3 +60,19 @@ ThumbCreator::Flags FFMpegThumbnailer::flags() const
     return (Flags)(None);
 }
 
+QWidget *FFMpegThumbnailer::createConfigurationWidget()
+{
+    QCheckBox *filmstripCheckBox = new QCheckBox(i18nc("@option:check", "Embed filmstrip effect"));
+    filmstripCheckBox->setChecked(FFMpegThumbnailerSettings::filmstrip());
+    return filmstripCheckBox;
+}
+
+void FFMpegThumbnailer::writeConfiguration(const QWidget *configurationWidget)
+{
+    const QCheckBox *filmstripCheckBox = qobject_cast<const QCheckBox*>(configurationWidget);
+    if (filmstripCheckBox) {
+        FFMpegThumbnailerSettings* settings = FFMpegThumbnailerSettings::self();
+        settings->setFilmstrip(filmstripCheckBox->isChecked());
+        settings->save();
+    }
+}

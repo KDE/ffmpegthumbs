@@ -308,8 +308,8 @@ bool MovieDecoder::initFilterGraph(enum AVPixelFormat pixfmt, int width, int hei
     m_filterGraph = avfilter_graph_alloc();
 
     QByteArray arguments("buffer=");
-    arguments += "video_size=" + QByteArray::number(width) + "x" + QByteArray::number(height) + ":";
-    arguments += "pix_fmt=" + QByteArray::number(pixfmt) + ":";
+    arguments += "video_size=" + QByteArray::number(width) + 'x' + QByteArray::number(height) + ':';
+    arguments += "pix_fmt=" + QByteArray::number(pixfmt) + ':';
     arguments += "time_base=1/1:pixel_aspect=0/1[in];";
     arguments += "[in]yadif[out];";
     arguments += "[out]buffersink";

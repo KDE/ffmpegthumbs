@@ -34,7 +34,7 @@ namespace ffmpegthumbnailer
 class MovieDecoder
 {
 public:
-    MovieDecoder(const QString& filename, AVFormatContext* pavContext = NULL);
+    explicit MovieDecoder(const QString& filename, AVFormatContext* pavContext = NULL);
     ~MovieDecoder();
 
     QString getCodec();

@@ -42,7 +42,7 @@ FFMpegThumbnailer::~FFMpegThumbnailer()
 {
 }
 
-bool FFMpegThumbnailer::create(const QString& path, int width, int /*heigth*/, QImage& img)
+bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, QImage& img)
 {
     m_Thumbnailer.setThumbnailSize(width);
     // 20% seek inside the video to generate the preview

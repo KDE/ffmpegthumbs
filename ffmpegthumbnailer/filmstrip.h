@@ -572,4 +572,3 @@ static const quint8 filmStrip64[64 * 64 * 3] = {
 };
 
 #endif
-                                           

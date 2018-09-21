@@ -29,8 +29,8 @@ class FFMpegThumbnailer : public QObject, public ThumbCreator
 public:
     FFMpegThumbnailer();
     virtual ~FFMpegThumbnailer();
-    virtual bool create(const QString& path, int width, int height, QImage& img);
-    virtual Flags flags() const;
+    virtual bool create(const QString& path, int width, int height, QImage& img) override;
+    virtual Flags flags() const override;
     virtual QWidget* createConfigurationWidget() override;
     virtual void writeConfiguration(const QWidget* configurationWidget) override;
 private:

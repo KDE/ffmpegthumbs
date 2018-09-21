@@ -31,7 +31,7 @@
 namespace ffmpegthumbnailer
 {
 
-class VideoFrame;
+struct VideoFrame;
 class ImageWriter;
 class MovieDecoder;
 

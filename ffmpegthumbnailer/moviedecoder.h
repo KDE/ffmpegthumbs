@@ -39,7 +39,7 @@ public:
 
     QString getCodec();
     void seek(int timeInSeconds);
-    void decodeVideoFrame();
+    bool decodeVideoFrame();
     void getScaledVideoFrame(int scaledSize, bool maintainAspectRatio, VideoFrame& videoFrame);
 
     int getWidth();

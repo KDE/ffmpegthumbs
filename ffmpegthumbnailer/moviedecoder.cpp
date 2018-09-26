@@ -227,7 +227,7 @@ void MovieDecoder::seek(int timeInSeconds)
 }
 
 
-void MovieDecoder::decodeVideoFrame()
+bool MovieDecoder::decodeVideoFrame()
 {
     bool frameFinished = false;
 
@@ -237,8 +237,9 @@ void MovieDecoder::decodeVideoFrame()
 
     if (!frameFinished) {
         qDebug() << "decodeVideoFrame() failed: frame not finished";
-        return;
     }
+
+    return frameFinished;
 }
 
 bool MovieDecoder::decodeVideoPacket()

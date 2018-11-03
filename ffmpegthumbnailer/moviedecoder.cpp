@@ -73,7 +73,10 @@ void MovieDecoder::initialize(const QString& filename)
         return;
     }
 
-    initializeVideo();
+    if (!initializeVideo()) {
+        // It already printed a message
+        return;
+    }
     m_pFrame = av_frame_alloc();
 
     if (m_pFrame) {
@@ -126,7 +129,7 @@ QString MovieDecoder::getCodec()
     return codecName;
 }
 
-void MovieDecoder::initializeVideo()
+bool MovieDecoder::initializeVideo()
 {
     for (unsigned int i = 0; i < m_pFormatContext->nb_streams; i++) {
         if (m_pFormatContext->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
@@ -138,7 +141,7 @@ void MovieDecoder::initializeVideo()
 
     if (m_VideoStream == -1) {
         qDebug() << "Could not find video stream";
-        return;
+        return false;
     }
 
     m_pVideoCodecContext = m_pFormatContext->streams[m_VideoStream]->codec;
@@ -148,14 +151,17 @@ void MovieDecoder::initializeVideo()
         // set to NULL, otherwise avcodec_close(m_pVideoCodecContext) crashes
         m_pVideoCodecContext = NULL;
         qDebug() << "Video Codec not found";
-        return;
+        return false;
     }
 
     m_pVideoCodecContext->workaround_bugs = 1;
 
     if (avcodec_open2(m_pVideoCodecContext, m_pVideoCodec, 0) < 0) {
         qDebug() << "Could not open video codec";
+        return false;
     }
+
+    return true;
 }
 
 int MovieDecoder::getWidth()

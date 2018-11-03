@@ -51,7 +51,7 @@ public:
     bool getInitialized();
 
 private:
-    void initializeVideo();
+    bool initializeVideo();
 
     bool decodeVideoPacket();
     bool getVideoPacket();

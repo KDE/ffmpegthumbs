@@ -26,6 +26,8 @@ include_directories(
 # Certain versions of FFMPEG need this to be defined
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D __STDC_CONSTANT_MACROS")
 
+add_definitions(-DTRANSLATION_DOMAIN=\"ffmpegthumbs\")
+
 set( ffmpegthumbs_PART_SRCS
   ffmpegthumbnailer.cpp
   ffmpegthumbnailer/filmstripfilter.cpp

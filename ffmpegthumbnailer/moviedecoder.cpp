@@ -21,6 +21,7 @@
 
 extern "C" {
 #include <libswscale/swscale.h>
+#include <libavutil/imgutils.h>
 }
 
 using namespace std;
@@ -58,8 +59,6 @@ void MovieDecoder::initialize(const QString& filename)
     m_lastWidth = -1;
     m_lastHeight = -1;
     m_lastPixfmt = AV_PIX_FMT_NONE;
-    av_register_all();
-    avcodec_register_all();
 
     QFileInfo fileInfo(filename);
 
@@ -131,21 +130,14 @@ QString MovieDecoder::getCodec()
 
 bool MovieDecoder::initializeVideo()
 {
-    for (unsigned int i = 0; i < m_pFormatContext->nb_streams; i++) {
-        if (m_pFormatContext->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
-            m_pVideoStream = m_pFormatContext->streams[i];
-            m_VideoStream = i;
-            break;
-        }
-    }
-
+    m_VideoStream = av_find_best_stream(m_pFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, &m_pVideoCodec, 0);
     if (m_VideoStream == -1) {
         qDebug() << "Could not find video stream";
         return false;
     }
 
-    m_pVideoCodecContext = m_pFormatContext->streams[m_VideoStream]->codec;
-    m_pVideoCodec = avcodec_find_decoder(m_pVideoCodecContext->codec_id);
+    m_pVideoCodecContext = avcodec_alloc_context3(m_pVideoCodec);
+    avcodec_parameters_to_context(m_pVideoCodecContext, m_pFormatContext->streams[m_VideoStream]->codecpar);
 
     if (m_pVideoCodec == NULL) {
         // set to NULL, otherwise avcodec_close(m_pVideoCodecContext) crashes
@@ -205,7 +197,7 @@ void MovieDecoder::seek(int timeInSeconds)
 
     int ret = av_seek_frame(m_pFormatContext, -1, timestamp, 0);
     if (ret >= 0) {
-        avcodec_flush_buffers(m_pFormatContext->streams[m_VideoStream]->codec);
+        avcodec_flush_buffers(m_pVideoCodecContext);
     } else {
         qDebug() << "Seeking in video failed";
         return;
@@ -258,17 +250,13 @@ bool MovieDecoder::decodeVideoPacket()
 
     int frameFinished = 0;
 
-#if LIBAVCODEC_VERSION_MAJOR < 53
-    int bytesDecoded = avcodec_decode_video(m_pVideoCodecContext, m_pFrame, &frameFinished, m_pPacket->data, m_pPacket->size);
-#else
-    int bytesDecoded = avcodec_decode_video2(m_pVideoCodecContext, m_pFrame, &frameFinished, m_pPacket);
-#endif
-
-    if (bytesDecoded < 0) {
-        qDebug() << "Failed to decode video frame: bytesDecoded < 0";
+    avcodec_send_packet(m_pVideoCodecContext, m_pPacket);
+    int ret = avcodec_receive_frame(m_pVideoCodecContext, m_pFrame);
+    if (ret == AVERROR(EAGAIN)) {
+        return false;
     }
 
-    return (frameFinished > 0);
+    return true;
 }
 
 bool MovieDecoder::getVideoPacket()
@@ -350,7 +338,7 @@ bool MovieDecoder::initFilterGraph(enum AVPixelFormat pixfmt, int width, int hei
     return true;
 }
 
-bool MovieDecoder::processFilterGraph(AVPicture *dst, const AVPicture *src,
+bool MovieDecoder::processFilterGraph(AVFrame *dst, const AVFrame *src,
                                 enum AVPixelFormat pixfmt, int width, int height)
 {
     if (!m_filterGraph || width != m_lastWidth ||
@@ -377,7 +365,7 @@ bool MovieDecoder::processFilterGraph(AVPicture *dst, const AVPicture *src,
         return false;
     }
 
-    av_picture_copy(dst, (const AVPicture *) m_filterFrame, pixfmt, width, height);
+    av_image_copy(dst->data, dst->linesize, (const uint8_t **)m_filterFrame->data, m_filterFrame->linesize, pixfmt, width, height);
     av_frame_unref(m_filterFrame);
 
     return true;
@@ -386,7 +374,7 @@ bool MovieDecoder::processFilterGraph(AVPicture *dst, const AVPicture *src,
 void MovieDecoder::getScaledVideoFrame(int scaledSize, bool maintainAspectRatio, VideoFrame& videoFrame)
 {
     if (m_pFrame->interlaced_frame) {
-        processFilterGraph((AVPicture*) m_pFrame, (AVPicture*) m_pFrame, m_pVideoCodecContext->pix_fmt,
+        processFilterGraph((AVFrame*) m_pFrame, (AVFrame*) m_pFrame, m_pVideoCodecContext->pix_fmt,
                               m_pVideoCodecContext->width, m_pVideoCodecContext->height);
     }
 
@@ -459,9 +447,9 @@ void MovieDecoder::createAVFrame(AVFrame** avFrame, quint8** frameBuffer, int wi
 {
     *avFrame = av_frame_alloc();
 
-    int numBytes = avpicture_get_size(format, width, height);
+    int numBytes = av_image_get_buffer_size (format, width + 1, height + 1, 16);
     *frameBuffer = reinterpret_cast<quint8*>(av_malloc(numBytes));
-    avpicture_fill((AVPicture*) *avFrame, *frameBuffer, format, width, height);
+    av_image_fill_arrays ((*avFrame)->data, (*avFrame)->linesize, *frameBuffer, format, width, height, 1);
 }
 
 }

@@ -61,7 +61,7 @@ private:
 
     void deleteFilterGraph();
     bool initFilterGraph(enum AVPixelFormat pixfmt, int width, int height);
-    bool processFilterGraph(AVPicture *dst, const AVPicture *src, enum AVPixelFormat pixfmt, int width, int height);
+    bool processFilterGraph(AVFrame *dst, const AVFrame *src, enum AVPixelFormat pixfmt, int width, int height);
 
 private:
     int                     m_VideoStream;

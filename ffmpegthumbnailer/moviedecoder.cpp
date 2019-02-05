@@ -131,7 +131,7 @@ QString MovieDecoder::getCodec()
 bool MovieDecoder::initializeVideo()
 {
     m_VideoStream = av_find_best_stream(m_pFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, &m_pVideoCodec, 0);
-    if (m_VideoStream == -1) {
+    if (m_VideoStream < 0) {
         qDebug() << "Could not find video stream";
         return false;
     }

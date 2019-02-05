@@ -139,7 +139,7 @@ bool MovieDecoder::initializeVideo()
         }
     }
 
-    if (m_VideoStream == -1) {
+    if (m_VideoStream < 0) {
         qDebug() << "Could not find video stream";
         return false;
     }

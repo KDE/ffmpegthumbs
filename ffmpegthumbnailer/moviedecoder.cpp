@@ -60,6 +60,8 @@ void MovieDecoder::initialize(const QString& filename)
     m_lastHeight = -1;
     m_lastPixfmt = AV_PIX_FMT_NONE;
 
+    av_register_all();
+
     QFileInfo fileInfo(filename);
 
     if ((!m_FormatContextWasGiven) && avformat_open_input(&m_pFormatContext, fileInfo.absoluteFilePath().toLocal8Bit().data(), NULL, NULL) != 0) {

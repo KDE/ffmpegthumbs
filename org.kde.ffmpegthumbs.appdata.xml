@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.ffmpegthumbs</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <extends>org.kde.dolphin.desktop</extends>
+  <extends>org.kde.konqueror.desktop</extends>
+  <extends>org.kde.krusader.desktop</extends>
+  <name>FFmpeg Thumbnailer</name>
+  <summary>Video thumbnail generator using FFmpeg</summary>
+  <description>
+    <p>FFmpeg Thumbnailer is a video thumbnail generator for KDE file managers.</p>
+  </description>
+  <url type="homepage">https://www.kde.org</url>
+  <url type="bugtracker">https://bugs.kde.org/</url>
+  <project_group>KDE</project_group>
+  <categories>
+    <category>Multimedia</category>
+  </categories>
+  <icon type="stock">video-x-generic</icon>
+</component>

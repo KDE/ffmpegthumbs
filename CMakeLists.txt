@@ -48,6 +48,9 @@ install(TARGETS ffmpegthumbs DESTINATION ${PLUGIN_INSTALL_DIR})
 
 install(FILES  ffmpegthumbs.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
+install(FILES org.kde.ffmpegthumbs.appdata.xml
+        DESTINATION ${KDE_INSTALL_METAINFODIR})
+
 if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()

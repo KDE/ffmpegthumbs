@@ -18,4 +18,9 @@
     <category>Video</category>
   </categories>
   <icon type="stock">video-x-generic</icon>
+  <screenshots>
+    <screenshot type="default">
+      <image type="source">https://cdn.kde.org/screenshots/ffmpegthumbs/ffmpegthumbs.png</image>
+    </screenshot>
+  </screenshots>
 </component>

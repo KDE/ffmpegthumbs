@@ -15,7 +15,7 @@
   <url type="bugtracker">https://bugs.kde.org/</url>
   <project_group>KDE</project_group>
   <categories>
-    <category>Multimedia</category>
+    <category>Video</category>
   </categories>
   <icon type="stock">video-x-generic</icon>
 </component>

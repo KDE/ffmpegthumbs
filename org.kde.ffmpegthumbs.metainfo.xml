@@ -9,6 +9,7 @@
   <name>FFmpeg Thumbnailer</name>
   <name xml:lang="ca">Generador de miniatures amb FFmpeg</name>
   <name xml:lang="de">FFmpeg-Vorschaugenerator</name>
+  <name xml:lang="eu">FFmpeg koadro-txiki egilea</name>
   <name xml:lang="pt">Miniaturas do FFmpeg</name>
   <name xml:lang="sv">FFmpeg miniatyrbilder</name>
   <name xml:lang="uk">Засіб створення мініатюр FFmpeg</name>
@@ -16,6 +17,7 @@
   <summary>Video thumbnail generator using FFmpeg</summary>
   <summary xml:lang="ca">Generador de miniatures de vídeo amb FFmpeg</summary>
   <summary xml:lang="de">Erstellt Video-Vorschaubilder mit FFmpeg</summary>
+  <summary xml:lang="eu">Bideoen koadro-txiki sortzailea FFmpeg erabiliz</summary>
   <summary xml:lang="pt">Gerador de miniaturas em vídeo que usa o FFmpeg</summary>
   <summary xml:lang="sv">Generering av videominiatyrbilder med användning av FFmpeg</summary>
   <summary xml:lang="uk">Засіб створення мініатюр відеоданих за допомогою FFmpeg</summary>
@@ -24,6 +26,7 @@
     <p>FFmpeg Thumbnailer is a video thumbnail generator for KDE file managers.</p>
     <p xml:lang="ca">El Generador de miniatures amb FFmpeg és un generador de miniatures de vídeo per als gestors de fitxers del KDE.</p>
     <p xml:lang="de">FFmpeg-Vorschaugenerator erstellt Video.Vorschaubilder für KDE-Dateiverwaltungsprogramme.</p>
+    <p xml:lang="eu">FFmpeg koadro-txiki egilea KDE fitxategi-kudeatzaileentzako bideoen koadro-txiki sortzaile bat da.</p>
     <p xml:lang="pt">As Miniaturas do FFmpeg são um gerador de miniaturas de vídeo para os gestores de ficheiros do KDE.</p>
     <p xml:lang="sv">FFmpeg miniatyrbilder är en generator av videominiatyrbilder för KDE filhanterare.</p>
     <p xml:lang="uk">Засіб створення мініатюр FFmpeg призначення для створення мініатюр вмісту відеофайлів у програмах для керування файлами KDE.</p>

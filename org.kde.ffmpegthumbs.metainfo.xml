@@ -8,6 +8,7 @@
   <extends>org.kde.krusader.desktop</extends>
   <name>FFmpeg Thumbnailer</name>
   <name xml:lang="ca">Generador de miniatures amb FFmpeg</name>
+  <name xml:lang="cs">Generátor náhledů pro FFmpeg</name>
   <name xml:lang="de">FFmpeg-Vorschaugenerator</name>
   <name xml:lang="el">Πρόγραμμα εικόνων επισκόπησης FFmpeg</name>
   <name xml:lang="en-GB">FFmpeg Thumbnailer</name>

@@ -12,6 +12,7 @@
   <name xml:lang="de">FFmpeg-Vorschaugenerator</name>
   <name xml:lang="el">Πρόγραμμα εικόνων επισκόπησης FFmpeg</name>
   <name xml:lang="en-GB">FFmpeg Thumbnailer</name>
+  <name xml:lang="es">Creador de vistas previas FFmpeg</name>
   <name xml:lang="eu">FFmpeg koadro-txiki egilea</name>
   <name xml:lang="fr">Créateur de vignettes FFmpeg</name>
   <name xml:lang="it">Generatore di miniature FFmpeg</name>
@@ -28,6 +29,7 @@
   <summary xml:lang="de">Erstellt Video-Vorschaubilder mit FFmpeg</summary>
   <summary xml:lang="el">Παραγωγός εικόνων επισκόπησης βίντεο με το FFmpeg</summary>
   <summary xml:lang="en-GB">Video thumbnail generator using FFmpeg</summary>
+  <summary xml:lang="es">Generador de vistas previas de vídeo usando FFmpeg</summary>
   <summary xml:lang="eu">Bideoen koadro-txiki sortzailea FFmpeg erabiliz</summary>
   <summary xml:lang="fr">Générateur de vignettes vidéo à l'aide de FFmpeg</summary>
   <summary xml:lang="it">Generatore di miniature video che usa FFmpeg</summary>
@@ -45,6 +47,7 @@
     <p xml:lang="de">FFmpeg-Vorschaugenerator erstellt Video.Vorschaubilder für KDE-Dateiverwaltungsprogramme.</p>
     <p xml:lang="el">Το πρόγραμμαεικόνων επισκόπησης FFmpeg είναι ένας παραγωγός εικόνων επισκόπησης βίντεο για τους διαχειριστές αρχείων του KDE.</p>
     <p xml:lang="en-GB">FFmpeg Thumbnailer is a video thumbnail generator for KDE file managers.</p>
+    <p xml:lang="es">El creador de vistas previas FFmpeg es un generador para los sistemas de archivo de KDE.</p>
     <p xml:lang="eu">FFmpeg koadro-txiki egilea KDE fitxategi-kudeatzaileentzako bideoen koadro-txiki sortzaile bat da.</p>
     <p xml:lang="fr">Le créateur de vignettes FFmpeg est un générateur de vignettes de vidéo pour les gestionnaires de fichiers KDE.</p>
     <p xml:lang="it">Il generatore di miniature FFmpeg è un generatore di miniature video per i gestori di file di KDE.</p>

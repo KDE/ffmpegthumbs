@@ -16,6 +16,7 @@
   <name xml:lang="eu">FFmpeg koadro-txiki egilea</name>
   <name xml:lang="fr">Créateur de vignettes FFmpeg</name>
   <name xml:lang="it">Generatore di miniature FFmpeg</name>
+  <name xml:lang="ko">FFmpeg 미리 보기 생성기</name>
   <name xml:lang="nl">FFmpeg miniatuurmaker</name>
   <name xml:lang="pl">Twórca miniatur FFmpeg</name>
   <name xml:lang="pt">Miniaturas do FFmpeg</name>
@@ -33,6 +34,7 @@
   <summary xml:lang="eu">Bideoen koadro-txiki sortzailea FFmpeg erabiliz</summary>
   <summary xml:lang="fr">Générateur de vignettes vidéo à l'aide de FFmpeg</summary>
   <summary xml:lang="it">Generatore di miniature video che usa FFmpeg</summary>
+  <summary xml:lang="ko">FFmpeg를 사용하여 동영상 미리 보기 생성</summary>
   <summary xml:lang="nl">Generator van videominiatuur met behulp van FFmpeg</summary>
   <summary xml:lang="pl">Twórca miniatur filmów wykorzystujący FFmpeg</summary>
   <summary xml:lang="pt">Gerador de miniaturas em vídeo que usa o FFmpeg</summary>
@@ -51,6 +53,7 @@
     <p xml:lang="eu">FFmpeg koadro-txiki egilea KDE fitxategi-kudeatzaileentzako bideoen koadro-txiki sortzaile bat da.</p>
     <p xml:lang="fr">Le créateur de vignettes FFmpeg est un générateur de vignettes de vidéo pour les gestionnaires de fichiers KDE.</p>
     <p xml:lang="it">Il generatore di miniature FFmpeg è un generatore di miniature video per i gestori di file di KDE.</p>
+    <p xml:lang="ko">FFmpeg 미리 보기 생성기는 KDE 파일 관리자의 동영상 미리 보기 생성기입니다.</p>
     <p xml:lang="nl">FFmpeg miniatuurmaker is een generator voor een videominiatuur voor KDE bestandsbeheerders.</p>
     <p xml:lang="pl">Twórca miniatur FFmpeg jest twórcą miniatur filmów dla przeglądarek plików KDE.</p>
     <p xml:lang="pt">As Miniaturas do FFmpeg são um gerador de miniaturas de vídeo para os gestores de ficheiros do KDE.</p>

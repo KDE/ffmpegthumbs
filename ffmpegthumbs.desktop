@@ -49,6 +49,7 @@ Name[sv]=Videofiler (ffmpeg miniatyrbilder)
 Name[tr]=Video Dosyaları (ffmpegthumbs)
 Name[ug]=سىن ھۆججەتلەر (ffmpegthumbs)
 Name[uk]=Файли відео (ffmpegthumbs)
+Name[x-test]=xxVideo Files (ffmpegthumbs)xx
 Name[zh_CN]=视频文件(ffmpegthumbs)
 Name[zh_TW]=影像檔 (ffmpegthumbs)
 X-KDE-ServiceTypes=ThumbCreator

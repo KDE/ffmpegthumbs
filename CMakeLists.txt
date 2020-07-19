@@ -15,6 +15,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
 find_package(KF5 REQUIRED COMPONENTS KIO I18n Config)
 find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
+find_package(Taglib)
 
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
@@ -39,7 +40,7 @@ set( ffmpegthumbs_PART_SRCS
 kconfig_add_kcfg_files(ffmpegthumbs_PART_SRCS ffmpegthumbnailersettings5.kcfgc)
 add_library(ffmpegthumbs MODULE ${ffmpegthumbs_PART_SRCS})
 
-target_link_libraries(ffmpegthumbs Qt5::Core Qt5::Gui KF5::KIOWidgets KF5::KIOCore KF5::I18n KF5::ConfigCore KF5::ConfigGui ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} )
+target_link_libraries(ffmpegthumbs Qt5::Core Qt5::Gui KF5::KIOWidgets KF5::KIOCore KF5::I18n KF5::ConfigCore KF5::ConfigGui ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} Taglib::Taglib )
 
 install(FILES ffmpegthumbnailersettings5.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(TARGETS ffmpegthumbs DESTINATION ${PLUGIN_INSTALL_DIR})

@@ -1,4 +1,5 @@
 //    Copyright (C) 2010 Dirk Vanden Boer <dirk.vdb@gmail.com>
+//    Copyright (C) 2020 Heiko Schäfer <heiko@rangun.de>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -16,6 +17,8 @@
 
 #include "ffmpegthumbnailer.h"
 #include "ffmpegthumbnailersettings5.h"
+
+#include <taglib/mp4file.h>
 
 #include <QImage>
 #include <QCheckBox>
@@ -44,6 +47,25 @@ FFMpegThumbnailer::~FFMpegThumbnailer()
 
 bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, QImage& img)
 {
+    QByteArray ba = path.toLocal8Bit();
+    TagLib::MP4::File f(ba.data(), false);
+
+    if (f.isValid()) {
+
+        TagLib::MP4::Tag* tag = f.tag();
+        TagLib::MP4::ItemListMap itemsListMap = tag->itemListMap();
+        TagLib::MP4::Item coverItem = itemsListMap["covr"];
+        TagLib::MP4::CoverArtList coverArtList = coverItem.toCoverArtList();
+
+        if (!coverArtList.isEmpty()) {
+            TagLib::MP4::CoverArt coverArt = coverArtList.front();
+            img.loadFromData((const uchar *)coverArt.data().data(),
+                         coverArt.data().size());
+
+            if (!img.isNull()) return true;
+        }
+    }
+
     m_Thumbnailer.setThumbnailSize(width);
     // 20% seek inside the video to generate the preview
     m_Thumbnailer.setSeekPercentage(20);

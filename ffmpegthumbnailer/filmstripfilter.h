@@ -26,7 +26,7 @@ class FilmStripFilter : public IFilter
 {
 public:
     virtual ~FilmStripFilter() {}
-    virtual void process(VideoFrame& videoFrame);
+    virtual void process(VideoFrame& videoFrame) override;
 };
 
 }

@@ -250,8 +250,6 @@ bool MovieDecoder::decodeVideoPacket()
 
     av_frame_unref(m_pFrame);
 
-    int frameFinished = 0;
-
     avcodec_send_packet(m_pVideoCodecContext, m_pPacket);
     int ret = avcodec_receive_frame(m_pVideoCodecContext, m_pFrame);
     if (ret == AVERROR(EAGAIN)) {

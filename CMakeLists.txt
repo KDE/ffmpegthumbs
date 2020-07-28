@@ -15,7 +15,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
 find_package(KF5 REQUIRED COMPONENTS KIO I18n Config)
 find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
-find_package(Taglib)
+find_package(Taglib REQUIRED)
 
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}

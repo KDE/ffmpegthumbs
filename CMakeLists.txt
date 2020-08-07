@@ -3,7 +3,7 @@ project(ffmpegthumbs)
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 set(QT_MIN_VERSION "5.2.0")
 
-find_package(ECM 1.0.0 REQUIRED NO_MODULE)
+find_package(ECM 5.14.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include(FeatureSummary)
@@ -11,6 +11,7 @@ include(WriteBasicConfigVersionFile)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
+include(ECMQtDeclareLoggingCategory)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
 find_package(KF5 REQUIRED COMPONENTS KIO I18n Config)
@@ -36,6 +37,8 @@ set( ffmpegthumbs_PART_SRCS
   ffmpegthumbnailer/imagewriter.cpp
   ffmpegthumbnailer/videothumbnailer.cpp
 )
+
+ecm_qt_declare_logging_category(ffmpegthumbs_PART_SRCS HEADER ffmpegthumbs_debug.h IDENTIFIER ffmpegthumbs_LOG CATEGORY_NAME org.kde.kdemultimedia.ffmpegthumbs DEFAULT_SEVERITY Critical)
 
 kconfig_add_kcfg_files(ffmpegthumbs_PART_SRCS ffmpegthumbnailersettings5.kcfgc)
 add_library(ffmpegthumbs MODULE ${ffmpegthumbs_PART_SRCS})

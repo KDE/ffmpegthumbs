@@ -15,6 +15,7 @@ set(ffmpegthumbtest_SRCS ffmpegthumbtest.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailer/imagewriter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailer/videothumbnailer.cpp
 )
+ecm_qt_declare_logging_category(ffmpegthumbtest_SRCS HEADER ffmpegthumbs_debug.h IDENTIFIER ffmpegthumbs_LOG CATEGORY_NAME org.kde.kdemultimedia.ffmpegthumbs DEFAULT_SEVERITY Critical)
 
 kconfig_add_kcfg_files(ffmpegthumbtest_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailersettings5.kcfgc)
 

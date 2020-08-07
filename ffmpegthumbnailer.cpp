@@ -17,6 +17,7 @@
 
 #include "ffmpegthumbnailer.h"
 #include "ffmpegthumbnailersettings5.h"
+#include "ffmpegthumbs_debug.h"
 
 #include <taglib/mp4file.h>
 
@@ -24,10 +25,52 @@
 #include <QCheckBox>
 #include <KLocalizedString>
 
+extern "C" {
+#include <libavutil/log.h>
+}
+
+namespace {
+struct FFmpegLogHandler {
+    static void handleMessage(void *ptr, int level, const char *fmt, va_list vargs) {
+        Q_UNUSED(ptr);
+
+        const QString message = QString::vasprintf(fmt, vargs);
+
+        switch(level) {
+        case AV_LOG_PANIC: // ffmpeg will crash now
+            qCCritical(ffmpegthumbs_LOG) << message;
+            break;
+        case AV_LOG_FATAL: // fatal as in can't decode, not crash
+        case AV_LOG_ERROR:
+        case AV_LOG_WARNING:
+            qCWarning(ffmpegthumbs_LOG) << message;
+            break;
+        case AV_LOG_INFO:
+            qCInfo(ffmpegthumbs_LOG) << message;
+            break;
+        case AV_LOG_VERBOSE:
+        case AV_LOG_DEBUG:
+            qCDebug(ffmpegthumbs_LOG) << message;
+            break;
+        default:
+            qCWarning(ffmpegthumbs_LOG) << "unhandled log level" << level << message;
+            break;
+        }
+    }
+
+    FFmpegLogHandler() {
+        av_log_set_callback(&FFmpegLogHandler::handleMessage);
+    }
+};
+} //namespace
+
 extern "C"
 {
     Q_DECL_EXPORT ThumbCreator *new_creator()
     {
+        // This is a threadsafe way to ensure that we only register it once
+        static FFmpegLogHandler handler;
+
         return new FFMpegThumbnailer();
     }
 }

@@ -19,6 +19,7 @@
   <name xml:lang="eu">FFmpeg koadro-txiki egilea</name>
   <name xml:lang="fi">FFmpeg-pienoiskuvien luonti</name>
   <name xml:lang="fr">Créateur de vignettes FFmpeg</name>
+  <name xml:lang="hi">FFmpeg लघुछवि बनाने वाला</name>
   <name xml:lang="id">FFmpeg Thumbnailer</name>
   <name xml:lang="it">Generatore di miniature FFmpeg</name>
   <name xml:lang="ko">FFmpeg 미리 보기 생성기</name>
@@ -48,6 +49,7 @@
   <summary xml:lang="eu">Bideoen koadro-txiki sortzailea FFmpeg erabiliz</summary>
   <summary xml:lang="fi">Luo FFmpegiä käyttäen videopienoiskuvia</summary>
   <summary xml:lang="fr">Générateur de vignettes vidéo à l'aide de FFmpeg</summary>
+  <summary xml:lang="hi">FFmpeg से विडियो के लघु छवि उत्पादक</summary>
   <summary xml:lang="id">Penghasil thumbnail video menggunakan FFmpeg</summary>
   <summary xml:lang="it">Generatore di miniature video che usa FFmpeg</summary>
   <summary xml:lang="ko">FFmpeg를 사용하여 동영상 미리 보기 생성</summary>
@@ -78,6 +80,7 @@
     <p xml:lang="eu">FFmpeg koadro-txiki egilea KDE fitxategi-kudeatzaileentzako bideoen koadro-txiki sortzaile bat da.</p>
     <p xml:lang="fi">FFmpeg-pienoiskuvien luonti luo videopienoiskuvia KDE:n tiedostonhallintaohjelmille.</p>
     <p xml:lang="fr">Le créateur de vignettes FFmpeg est un générateur de vignettes de vidéo pour les gestionnaires de fichiers KDE.</p>
+    <p xml:lang="hi"> FFmpeg थंबनेलर केडीई फ़ाइल प्रबंधक के लिए एक विडियो लघुछवि उत्पादक है</p>
     <p xml:lang="id">FFmpeg Thumbnailer adalah sebuah penghasil thumbnail video untuk pengelolaan file KDE.</p>
     <p xml:lang="it">Il generatore di miniature FFmpeg è un generatore di miniature video per i gestori di file di KDE.</p>
     <p xml:lang="ko">FFmpeg 미리 보기 생성기는 KDE 파일 관리자의 동영상 미리 보기 생성기입니다.</p>

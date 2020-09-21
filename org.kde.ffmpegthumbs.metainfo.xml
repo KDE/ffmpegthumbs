@@ -27,6 +27,7 @@
   <name xml:lang="pl">Twórca miniatur FFmpeg</name>
   <name xml:lang="pt">Miniaturas do FFmpeg</name>
   <name xml:lang="pt-BR">Miniaturas do FFmpeg</name>
+  <name xml:lang="ro">FFmpeg Thumbnailer</name>
   <name xml:lang="ru">FFmpeg Thumbnailer</name>
   <name xml:lang="sk">FFmpeg Thumbnailer</name>
   <name xml:lang="sl">FFmpeg Thumbnailer</name>
@@ -56,6 +57,7 @@
   <summary xml:lang="pl">Twórca miniatur filmów wykorzystujący FFmpeg</summary>
   <summary xml:lang="pt">Gerador de miniaturas em vídeo que usa o FFmpeg</summary>
   <summary xml:lang="pt-BR">Gerador de miniaturas em vídeo que usa o FFmpeg</summary>
+  <summary xml:lang="ro">Generator de miniaturi video folosind FFmpeg</summary>
   <summary xml:lang="ru">Создание миниатюр файлов видео с использованием библиотеки FFmpeg</summary>
   <summary xml:lang="sk">Generátor video miniatúr pomocou FFmpeg</summary>
   <summary xml:lang="sl">Generator video sličic z uporabo FFmpeg</summary>
@@ -86,6 +88,7 @@
     <p xml:lang="pl">Twórca miniatur FFmpeg jest twórcą miniatur filmów dla przeglądarek plików KDE.</p>
     <p xml:lang="pt">As Miniaturas do FFmpeg são um gerador de miniaturas de vídeo para os gestores de ficheiros do KDE.</p>
     <p xml:lang="pt-BR">Miniaturas do FFmpeg é um gerador de miniaturas de vídeo para os gerenciadores de arquivos do KDE.</p>
+    <p xml:lang="ro">FFmpeg Thumbnailer e un generator de miniaturi video pentru gestionari de fișiere KDE.</p>
     <p xml:lang="ru">Модуль FFmpeg Thumbnailer служит для создания миниатюр файлов в диспетчерах файлов KDE.</p>
     <p xml:lang="sk">FFmpeg Thumbnailer je generátor video miniatúr pre KDE správcov súborov.</p>
     <p xml:lang="sl">FFmpeg Thumbnailer je generator sličic video datotek za upravitelje datotek KDE.</p>

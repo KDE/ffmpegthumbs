@@ -50,6 +50,7 @@ struct FFmpegLogHandler {
             break;
         case AV_LOG_VERBOSE:
         case AV_LOG_DEBUG:
+        case AV_LOG_TRACE:
             qCDebug(ffmpegthumbs_LOG) << message;
             break;
         default:

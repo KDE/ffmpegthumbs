@@ -38,7 +38,15 @@ set( ffmpegthumbs_PART_SRCS
   ffmpegthumbnailer/videothumbnailer.cpp
 )
 
-ecm_qt_declare_logging_category(ffmpegthumbs_PART_SRCS HEADER ffmpegthumbs_debug.h IDENTIFIER ffmpegthumbs_LOG CATEGORY_NAME org.kde.kdemultimedia.ffmpegthumbs DEFAULT_SEVERITY Critical)
+ecm_qt_declare_logging_category(
+  ffmpegthumbs_PART_SRCS
+  HEADER ffmpegthumbs_debug.h
+  IDENTIFIER ffmpegthumbs_LOG
+  CATEGORY_NAME org.kde.kdemultimedia.ffmpegthumbs
+  DEFAULT_SEVERITY Critical
+  EXPORT ffmpegthumbs
+  DESCRIPTION "FFmpeg video thumbnailer"
+)
 
 kconfig_add_kcfg_files(ffmpegthumbs_PART_SRCS ffmpegthumbnailersettings5.kcfgc)
 add_library(ffmpegthumbs MODULE ${ffmpegthumbs_PART_SRCS})
@@ -47,6 +55,11 @@ target_link_libraries(ffmpegthumbs Qt5::Core Qt5::Gui KF5::KIOWidgets KF5::KIOCo
 
 install(FILES ffmpegthumbnailersettings5.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(TARGETS ffmpegthumbs DESTINATION ${PLUGIN_INSTALL_DIR})
+
+ecm_qt_install_logging_categories(
+  EXPORT ffmpegthumbs
+  DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
 
 ########### install files ###############
 

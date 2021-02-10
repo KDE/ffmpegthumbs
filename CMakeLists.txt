@@ -3,7 +3,7 @@ project(ffmpegthumbs)
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 set(QT_MIN_VERSION "5.2.0")
 
-find_package(ECM 5.68.0 REQUIRED NO_MODULE)
+find_package(ECM 5.72.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include(FeatureSummary)

@@ -18,14 +18,23 @@
 #define KFFMPEG_THUMBNAILER_H
 
 #include <QObject>
-#include <kio/thumbcreator.h>
+#include <QCache>
+#include <kio/thumbsequencecreator.h>
 
 #include <ffmpegthumbnailer/videothumbnailer.h>
 #include <ffmpegthumbnailer/filmstripfilter.h>
 
-class FFMpegThumbnailer : public QObject, public ThumbCreator
+class QCheckBox;
+class QLineEdit;
+class QSpinBox;
+
+class FFMpegThumbnailer : public QObject, public ThumbSequenceCreator
 {
     Q_OBJECT
+
+private:
+    typedef QCache<QString, QImage> ThumbCache;
+
 public:
     FFMpegThumbnailer();
     virtual ~FFMpegThumbnailer();
@@ -33,9 +42,14 @@ public:
     virtual Flags flags() const override;
     virtual QWidget* createConfigurationWidget() override;
     virtual void writeConfiguration(const QWidget* configurationWidget) override;
+
+private:
+    void updateSequenceIndexWraparoundPoint(float offset);
+
 private:
     ffmpegthumbnailer::VideoThumbnailer m_Thumbnailer;
     ffmpegthumbnailer::FilmStripFilter  m_FilmStrip;
+    ThumbCache                          m_thumbCache;
 };
 
 #endif

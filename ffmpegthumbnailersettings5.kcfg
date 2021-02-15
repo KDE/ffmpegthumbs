@@ -9,5 +9,13 @@
           <label>Embed filmstrip effect</label>
           <default>true</default>
       </entry>
+      <entry name="sequenceSeekPercentages" type="IntList">
+          <label>Sequence seek percentages</label>
+          <default>20,35,50,65,80</default>
+      </entry>
+      <entry name="cacheSize" type="UInt">
+          <label>Cache size (KiB)</label>
+          <default>51200</default>
+      </entry>
     </group>
 </kcfg>

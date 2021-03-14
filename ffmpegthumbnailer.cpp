@@ -19,7 +19,7 @@
 #include "ffmpegthumbnailersettings5.h"
 #include "ffmpegthumbs_debug.h"
 
-#include <taglib/mp4file.h>
+#include <mp4file.h>
 
 #include <QImage>
 #include <QCheckBox>

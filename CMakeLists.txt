@@ -22,7 +22,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
     ${PC_AVCODEC_INCLUDEDIR}
     ${PC_AVFORMAT_INCLUDEDIR}
-    ${FFMPEG_INCLUDE_DIR}
+    ${FFMPEG_INCLUDE_DIRS}
     )
 
 # Certain versions of FFMPEG need this to be defined

@@ -242,7 +242,7 @@ void FFMpegThumbnailer::writeConfiguration(const QWidget* configurationWidget)
     QList<int> seekPercentages;
     bool seekPercentagesValid = true;
 
-    for (const QStringRef str : seekPercentagesStrList) {
+    for (const QStringRef& str : seekPercentagesStrList) {
         const int sp = str.toInt(&seekPercentagesValid);
 
         if (!seekPercentagesValid) {

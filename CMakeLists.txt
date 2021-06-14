@@ -59,8 +59,8 @@ kconfig_add_kcfg_files(ffmpegthumbs ffmpegthumbnailersettings5.kcfgc)
 
 target_link_libraries(ffmpegthumbs Qt5::Core Qt5::Gui KF5::KIOWidgets KF5::KIOCore KF5::I18n KF5::ConfigCore KF5::ConfigGui ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} Taglib::Taglib )
 
-install(FILES ffmpegthumbnailersettings5.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(TARGETS ffmpegthumbs DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES ffmpegthumbnailersettings5.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(TARGETS ffmpegthumbs DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 ecm_qt_install_logging_categories(
   EXPORT ffmpegthumbs
@@ -69,7 +69,7 @@ ecm_qt_install_logging_categories(
 
 ########### install files ###############
 
-install(FILES  ffmpegthumbs.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES  ffmpegthumbs.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 install(FILES org.kde.ffmpegthumbs.metainfo.xml
         DESTINATION ${KDE_INSTALL_METAINFODIR})

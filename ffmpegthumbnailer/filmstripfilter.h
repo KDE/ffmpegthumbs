@@ -25,8 +25,8 @@ namespace ffmpegthumbnailer
 class FilmStripFilter : public IFilter
 {
 public:
-    virtual ~FilmStripFilter() {}
-    virtual void process(VideoFrame& videoFrame) override;
+    ~FilmStripFilter() override {}
+    void process(VideoFrame& videoFrame) override;
 };
 
 }

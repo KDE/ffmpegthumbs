@@ -10,12 +10,13 @@
 #include "filmstripfilter.h"
 #include "imagewriter.h"
 
+#include <QtGlobal>
+#include <QTime>
+
 #include <iostream>
 #include <cfloat>
 #include <cmath>
-#include <qglobal.h>
 #include <sys/stat.h>
-#include <QTime>
 
 
 using namespace std;

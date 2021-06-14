@@ -9,7 +9,8 @@
 
 #include <QObject>
 #include <QCache>
-#include <kio/thumbsequencecreator.h>
+// KF
+#include <KIO/ThumbSequenceCreator>
 
 #include <ffmpegthumbnailer/videothumbnailer.h>
 #include <ffmpegthumbnailer/filmstripfilter.h>

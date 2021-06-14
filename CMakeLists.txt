@@ -15,11 +15,12 @@ set(KF_MIN_VERSION "5.83.0")
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
+
 include(ECMQtDeclareLoggingCategory)
+include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
 find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO I18n Config)
@@ -76,3 +77,5 @@ install(FILES org.kde.ffmpegthumbs.metainfo.xml
 if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()
+
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

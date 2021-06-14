@@ -27,9 +27,6 @@ find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
 find_package(Taglib REQUIRED)
 
 include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}
-    ${PC_AVCODEC_INCLUDEDIR}
-    ${PC_AVFORMAT_INCLUDEDIR}
     ${FFMPEG_INCLUDE_DIRS}
     )
 

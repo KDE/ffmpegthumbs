@@ -1,9 +1,11 @@
+cmake_minimum_required(VERSION 3.16)
+
 project(ffmpegthumbs)
 
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
-set(QT_MIN_VERSION "5.2.0")
+set(QT_MIN_VERSION "5.15.0")
+set(KF_MIN_VERSION "5.83.0")
 
-find_package(ECM 5.80.0 REQUIRED NO_MODULE)
+find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include(FeatureSummary)
@@ -14,7 +16,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMQtDeclareLoggingCategory)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
-find_package(KF5 REQUIRED COMPONENTS KIO I18n Config)
+find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO I18n Config)
 find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
 find_package(Taglib REQUIRED)
 

@@ -1,25 +1,25 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-########### next target ###############
+add_executable(ffmpegthumbtest)
 
-
-include_directories( .. )
-
-
-########### next target ###############
-set(ffmpegthumbtest_SRCS ffmpegthumbtest.cpp
+target_sources(ffmpegthumbtest PRIVATE
+    ffmpegthumbtest.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailer/filmstripfilter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailer/moviedecoder.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailer/imagewriter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailer/videothumbnailer.cpp
 )
-ecm_qt_declare_logging_category(ffmpegthumbtest_SRCS HEADER ffmpegthumbs_debug.h IDENTIFIER ffmpegthumbs_LOG CATEGORY_NAME org.kde.kdemultimedia.ffmpegthumbs DEFAULT_SEVERITY Critical)
+ecm_qt_declare_logging_category(ffmpegthumbtest
+    HEADER ffmpegthumbs_debug.h
+    IDENTIFIER ffmpegthumbs_LOG
+    CATEGORY_NAME org.kde.kdemultimedia.ffmpegthumbs
+    DEFAULT_SEVERITY Critical
+)
 
-kconfig_add_kcfg_files(ffmpegthumbtest_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailersettings5.kcfgc)
+kconfig_add_kcfg_files(ffmpegthumbtest ${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthumbnailersettings5.kcfgc)
 
-add_executable(ffmpegthumbtest ${ffmpegthumbtest_SRCS} )
+target_include_directories(ffmpegthumbtest PRIVATE ..)
 
 target_link_libraries(ffmpegthumbtest Qt5::Core Qt5::Gui KF5::KIOWidgets KF5::KIOCore KF5::I18n KF5::ConfigCore KF5::ConfigGui ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} Taglib::Taglib)
 

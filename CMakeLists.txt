@@ -36,7 +36,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D __STDC_CONSTANT_MACROS")
 
 add_definitions(-DTRANSLATION_DOMAIN=\"ffmpegthumbs\")
 
-set( ffmpegthumbs_PART_SRCS
+add_library(ffmpegthumbs MODULE)
+
+target_sources(ffmpegthumbs PRIVATE
   ffmpegthumbnailer.cpp
   ffmpegthumbnailer/filmstripfilter.cpp
   ffmpegthumbnailer/moviedecoder.cpp
@@ -44,8 +46,7 @@ set( ffmpegthumbs_PART_SRCS
   ffmpegthumbnailer/videothumbnailer.cpp
 )
 
-ecm_qt_declare_logging_category(
-  ffmpegthumbs_PART_SRCS
+ecm_qt_declare_logging_category(ffmpegthumbs
   HEADER ffmpegthumbs_debug.h
   IDENTIFIER ffmpegthumbs_LOG
   CATEGORY_NAME org.kde.kdemultimedia.ffmpegthumbs
@@ -54,8 +55,7 @@ ecm_qt_declare_logging_category(
   DESCRIPTION "FFmpeg video thumbnailer"
 )
 
-kconfig_add_kcfg_files(ffmpegthumbs_PART_SRCS ffmpegthumbnailersettings5.kcfgc)
-add_library(ffmpegthumbs MODULE ${ffmpegthumbs_PART_SRCS})
+kconfig_add_kcfg_files(ffmpegthumbs ffmpegthumbnailersettings5.kcfgc)
 
 target_link_libraries(ffmpegthumbs Qt5::Core Qt5::Gui KF5::KIOWidgets KF5::KIOCore KF5::I18n KF5::ConfigCore KF5::ConfigGui ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES} Taglib::Taglib )
 

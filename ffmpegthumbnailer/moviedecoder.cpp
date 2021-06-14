@@ -32,13 +32,13 @@ namespace ffmpegthumbnailer
 MovieDecoder::MovieDecoder(const QString& filename, AVFormatContext* pavContext)
         : m_VideoStream(-1)
         , m_pFormatContext(pavContext)
-        , m_pVideoCodecContext(NULL)
-        , m_pVideoCodec(NULL)
-        , m_pVideoStream(NULL)
-        , m_pFrame(NULL)
-        , m_pFrameBuffer(NULL)
-        , m_pPacket(NULL)
-        , m_FormatContextWasGiven(pavContext != NULL)
+        , m_pVideoCodecContext(nullptr)
+        , m_pVideoCodec(nullptr)
+        , m_pVideoStream(nullptr)
+        , m_pFrame(nullptr)
+        , m_pFrameBuffer(nullptr)
+        , m_pPacket(nullptr)
+        , m_FormatContextWasGiven(pavContext != nullptr)
         , m_AllowSeek(true)
         , m_initialized(false)
         , m_bufferSinkContext(nullptr)
@@ -66,12 +66,12 @@ void MovieDecoder::initialize(const QString& filename)
 
     QFileInfo fileInfo(filename);
 
-    if ((!m_FormatContextWasGiven) && avformat_open_input(&m_pFormatContext, fileInfo.absoluteFilePath().toLocal8Bit().data(), NULL, NULL) != 0) {
+    if ((!m_FormatContextWasGiven) && avformat_open_input(&m_pFormatContext, fileInfo.absoluteFilePath().toLocal8Bit().data(), nullptr, nullptr) != 0) {
         qDebug() <<  "Could not open input file: " << fileInfo.absoluteFilePath();
         return;
     }
 
-    if (avformat_find_stream_info(m_pFormatContext, 0) < 0) {
+    if (avformat_find_stream_info(m_pFormatContext, nullptr) < 0) {
         qDebug() << "Could not find stream information";
         return;
     }
@@ -98,28 +98,28 @@ void MovieDecoder::destroy()
     deleteFilterGraph();
     if (m_pVideoCodecContext) {
         avcodec_close(m_pVideoCodecContext);
-        m_pVideoCodecContext = NULL;
+        m_pVideoCodecContext = nullptr;
     }
 
     if ((!m_FormatContextWasGiven) && m_pFormatContext) {
         avformat_close_input(&m_pFormatContext);
-        m_pFormatContext = NULL;
+        m_pFormatContext = nullptr;
     }
 
     if (m_pPacket) {
         av_packet_unref(m_pPacket);
         delete m_pPacket;
-        m_pPacket = NULL;
+        m_pPacket = nullptr;
     }
 
     if (m_pFrame) {
         av_frame_free(&m_pFrame);
-        m_pFrame = NULL;
+        m_pFrame = nullptr;
     }
 
     if (m_pFrameBuffer) {
         av_free(m_pFrameBuffer);
-        m_pFrameBuffer = NULL;
+        m_pFrameBuffer = nullptr;
     }
 }
 
@@ -143,16 +143,16 @@ bool MovieDecoder::initializeVideo()
     m_pVideoCodecContext = avcodec_alloc_context3(m_pVideoCodec);
     avcodec_parameters_to_context(m_pVideoCodecContext, m_pFormatContext->streams[m_VideoStream]->codecpar);
 
-    if (m_pVideoCodec == NULL) {
-        // set to NULL, otherwise avcodec_close(m_pVideoCodecContext) crashes
-        m_pVideoCodecContext = NULL;
+    if (m_pVideoCodec == nullptr) {
+        // set to nullptr, otherwise avcodec_close(m_pVideoCodecContext) crashes
+        m_pVideoCodecContext = nullptr;
         qDebug() << "Video Codec not found";
         return false;
     }
 
     m_pVideoCodecContext->workaround_bugs = 1;
 
-    if (avcodec_open2(m_pVideoCodecContext, m_pVideoCodec, 0) < 0) {
+    if (avcodec_open2(m_pVideoCodecContext, m_pVideoCodec, nullptr) < 0) {
         qDebug() << "Could not open video codec";
         return false;
     }
@@ -397,15 +397,15 @@ void MovieDecoder::convertAndScaleFrame(AVPixelFormat format, int scaledSize, bo
     calculateDimensions(scaledSize, maintainAspectRatio, scaledWidth, scaledHeight);
     SwsContext* scaleContext = sws_getContext(m_pVideoCodecContext->width, m_pVideoCodecContext->height,
                                m_pVideoCodecContext->pix_fmt, scaledWidth, scaledHeight,
-                               format, SWS_BICUBIC, NULL, NULL, NULL);
+                               format, SWS_BICUBIC, nullptr, nullptr, nullptr);
 
-    if (NULL == scaleContext) {
+    if (nullptr == scaleContext) {
         qDebug() << "Failed to create resize context";
         return;
     }
 
-    AVFrame* convertedFrame = NULL;
-    uint8_t* convertedFrameBuffer = NULL;
+    AVFrame* convertedFrame = nullptr;
+    uint8_t* convertedFrameBuffer = nullptr;
 
     createAVFrame(&convertedFrame, &convertedFrameBuffer, scaledWidth, scaledHeight, format);
 

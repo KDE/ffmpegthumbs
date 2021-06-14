@@ -96,7 +96,7 @@ int timeToSeconds(const QString& time)
 
 void VideoThumbnailer::generateThumbnail(const QString& videoFile, ImageWriter& imageWriter, QImage &image)
 {
-    MovieDecoder movieDecoder(videoFile, NULL);
+    MovieDecoder movieDecoder(videoFile, nullptr);
     if (movieDecoder.getInitialized()) {
         if (!movieDecoder.decodeVideoFrame()) { //before seeking, a frame has to be decoded
             return;

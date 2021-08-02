@@ -31,8 +31,6 @@ public:
     ~FFMpegThumbnailer() override;
     bool create(const QString& path, int width, int height, QImage& img) override;
     Flags flags() const override;
-    QWidget* createConfigurationWidget() override;
-    void writeConfiguration(const QWidget* configurationWidget) override;
 
 private:
     void updateSequenceIndexWraparoundPoint(float offset);

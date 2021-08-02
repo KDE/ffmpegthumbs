@@ -61,4 +61,3 @@ CacheThumbnail=true
 HandleSequences=true
 ThumbnailerVersion=2
 IgnoreMaximumSize=true
-Configurable=true

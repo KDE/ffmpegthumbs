@@ -116,4 +116,7 @@
       <image type="source">https://cdn.kde.org/screenshots/ffmpegthumbs/ffmpegthumbs.png</image>
     </screenshot>
   </screenshots>
+  <releases>
+    <release version="21.08.0" date="2021-08-12"/>
+  </releases>
 </component>

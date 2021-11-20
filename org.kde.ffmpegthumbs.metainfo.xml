@@ -22,6 +22,7 @@
   <name xml:lang="hi">एफ़एफ़एमपेग लघुछविकार</name>
   <name xml:lang="ia">FFmpeg Thumbnailer (Generator de miniaturas de FFmpeg)</name>
   <name xml:lang="id">FFmpeg Thumbnailer</name>
+  <name xml:lang="is">FFmpeg smámyndagerð</name>
   <name xml:lang="it">Generatore di miniature FFmpeg</name>
   <name xml:lang="ko">FFmpeg 축소판 생성기</name>
   <name xml:lang="nl">FFmpeg miniatuurmaker</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="hi">एफ़एफ़एमपेग द्वारा चलचित्र लघुछवि उत्पादक</summary>
   <summary xml:lang="ia">Generator  de miniatura video usante FFmpeg</summary>
   <summary xml:lang="id">Penghasil thumbnail video menggunakan FFmpeg</summary>
+  <summary xml:lang="is">Gerð smámynda úr myndskeiðum með FFmpeg</summary>
   <summary xml:lang="it">Generatore di miniature video che usa FFmpeg</summary>
   <summary xml:lang="ko">FFmpeg를 사용하여 동영상 축소판 생성</summary>
   <summary xml:lang="nl">Generator van videominiatuur met behulp van FFmpeg</summary>
@@ -87,6 +89,7 @@
     <p xml:lang="hi">एफ़एफ़एमपेग लघुछविकार केडीई फ़ाइल प्रबंधक के लिए एक चलचित्र लघुछवि उत्पादक है।</p>
     <p xml:lang="ia">FFmpeg Thumbnailer es un generator de miniaturas video per gerente de file de KDE.</p>
     <p xml:lang="id">FFmpeg Thumbnailer adalah sebuah penghasil thumbnail video untuk pengelolaan file KDE.</p>
+    <p xml:lang="is">FFmpeg smámyndagerð útbýr smámyndir úr myndskeiðum fyrir skráastjóra KDE.</p>
     <p xml:lang="it">Il generatore di miniature FFmpeg è un generatore di miniature video per i gestori di file di KDE.</p>
     <p xml:lang="ko">FFmpeg 축소판 생성기는 KDE 파일 관리자의 동영상 축소판 생성기입니다.</p>
     <p xml:lang="nl">FFmpeg miniatuurmaker is een generator voor een videominiatuur voor KDE bestandsbeheerders.</p>

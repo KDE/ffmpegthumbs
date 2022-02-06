@@ -7,6 +7,7 @@
   <extends>org.kde.konqueror.desktop</extends>
   <extends>org.kde.krusader.desktop</extends>
   <name>FFmpeg Thumbnailer</name>
+  <name xml:lang="ar">منشئ مصغرات الفيديو</name>
   <name xml:lang="ca">Generador de miniatures amb FFmpeg</name>
   <name xml:lang="ca-valencia">Generador de miniatures amb FFmpeg</name>
   <name xml:lang="cs">Generátor náhledů pro FFmpeg</name>
@@ -40,6 +41,7 @@
   <name xml:lang="zh-CN">FFmpeg 缩略图生成器</name>
   <name xml:lang="zh-TW">FFmpeg 縮圖產生工具</name>
   <summary>Video thumbnail generator using FFmpeg</summary>
+  <summary xml:lang="ar">مولد مصغرات الفيديو باستعمال FFmpeg</summary>
   <summary xml:lang="ca">Generador de miniatures de vídeo amb FFmpeg</summary>
   <summary xml:lang="ca-valencia">Generador de miniatures de vídeo amb FFmpeg</summary>
   <summary xml:lang="cs">Generátor náhledů videí pomocí FFmpegu</summary>
@@ -74,6 +76,7 @@
   <summary xml:lang="zh-TW">使用 FFmpeg 的影片縮圖產生工具</summary>
   <description>
     <p>FFmpeg Thumbnailer is a video thumbnail generator for KDE file managers.</p>
+    <p xml:lang="ar">منشئ مصغرات الفيديو يولد مصغرات فيديو لتطبيقات مدير الملفات في كدي.</p>
     <p xml:lang="ca">El Generador de miniatures amb FFmpeg és un generador de miniatures de vídeo per als gestors de fitxers del KDE.</p>
     <p xml:lang="ca-valencia">El Generador de miniatures amb FFmpeg és un generador de miniatures de vídeo per als gestors de fitxers del KDE.</p>
     <p xml:lang="cs">FFmpeg Thumbnailer je generátor náhledů videí pro správce souborů KDE.</p>

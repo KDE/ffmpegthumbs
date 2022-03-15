@@ -57,7 +57,11 @@ private:
     int                     m_VideoStream;
     AVFormatContext*        m_pFormatContext;
     AVCodecContext*         m_pVideoCodecContext;
+#if LIBAVCODEC_VERSION_MAJOR < 59
     AVCodec*                m_pVideoCodec;
+#else
+    const AVCodec*          m_pVideoCodec;
+#endif
     AVStream*               m_pVideoStream;
     AVFrame*                m_pFrame;
     quint8*                 m_pFrameBuffer;

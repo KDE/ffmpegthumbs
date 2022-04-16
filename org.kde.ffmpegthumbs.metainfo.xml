@@ -36,6 +36,7 @@
   <name xml:lang="sk">FFmpeg Thumbnailer</name>
   <name xml:lang="sl">FFmpeg Thumbnailer</name>
   <name xml:lang="sv">FFmpeg miniatyrbilder</name>
+  <name xml:lang="tr">FFmpeg Küçük Görsel Oluşturucu</name>
   <name xml:lang="uk">Засіб створення мініатюр FFmpeg</name>
   <name xml:lang="x-test">xxFFmpeg Thumbnailerxx</name>
   <name xml:lang="zh-CN">FFmpeg 缩略图生成器</name>
@@ -70,6 +71,7 @@
   <summary xml:lang="sk">Generátor video miniatúr pomocou FFmpeg</summary>
   <summary xml:lang="sl">Generator video sličic z uporabo FFmpeg</summary>
   <summary xml:lang="sv">Generering av videominiatyrbilder med användning av FFmpeg</summary>
+  <summary xml:lang="tr">FFmpeg kullanan video küçük görseli oluşturucu</summary>
   <summary xml:lang="uk">Засіб створення мініатюр відеоданих за допомогою FFmpeg</summary>
   <summary xml:lang="x-test">xxVideo thumbnail generator using FFmpegxx</summary>
   <summary xml:lang="zh-CN">基于 FFmpeg 的视频缩略图生成器</summary>
@@ -105,6 +107,7 @@
     <p xml:lang="sk">FFmpeg Thumbnailer je generátor video miniatúr pre KDE správcov súborov.</p>
     <p xml:lang="sl">FFmpeg Thumbnailer je generator sličic video datotek za upravitelje datotek KDE.</p>
     <p xml:lang="sv">FFmpeg miniatyrbilder är en generator av videominiatyrbilder för KDE filhanterare.</p>
+    <p xml:lang="tr">FFmpeg Küçük Görsel Oluşturucu, KDE dosya yöneticileri için bir video küçük görseli oluşturucudur.</p>
     <p xml:lang="uk">Засіб створення мініатюр FFmpeg призначення для створення мініатюр вмісту відеофайлів у програмах для керування файлами KDE.</p>
     <p xml:lang="x-test">xxFFmpeg Thumbnailer is a video thumbnail generator for KDE file managers.xx</p>
     <p xml:lang="zh-CN">FFmpeg 缩略图生成器是一款针对 KDE 文件管理器开发的视频缩略图生成器。</p>

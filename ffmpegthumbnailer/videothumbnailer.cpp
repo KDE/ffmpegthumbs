@@ -107,7 +107,7 @@ void VideoThumbnailer::generateThumbnail(const QString& videoFile, ImageWriter& 
         }
         
         applyFilters(videoFrame);
-        imageWriter.writeFrame(videoFrame, image);
+        imageWriter.writeFrame(videoFrame, image, movieDecoder.transformations());
     }
 }
 

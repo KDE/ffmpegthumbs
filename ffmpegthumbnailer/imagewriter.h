@@ -11,6 +11,7 @@
 #include <string>
 #include <inttypes.h>
 #include <QImage>
+#include <QImageIOHandler>
 
 namespace ffmpegthumbnailer
 {
@@ -21,7 +22,7 @@ public:
     ImageWriter();
     virtual ~ImageWriter() {}
 
-    virtual void writeFrame(VideoFrame& frame, QImage& image);
+    virtual void writeFrame(VideoFrame& frame, QImage& image, const QImageIOHandler::Transformations transformations);
 };
 
 }

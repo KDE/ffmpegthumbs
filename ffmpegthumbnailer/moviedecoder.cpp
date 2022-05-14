@@ -5,12 +5,14 @@
 */
 
 #include "moviedecoder.h"
+#include "ffmpegthumbs_debug.h"
 
 #include <QDebug>
 #include <QFileInfo>
 
 extern "C" {
 #include <libswscale/swscale.h>
+#include <libavutil/display.h>
 #include <libavutil/imgutils.h>
 }
 
@@ -90,6 +92,7 @@ void MovieDecoder::destroy()
         avcodec_close(m_pVideoCodecContext);
         m_pVideoCodecContext = nullptr;
     }
+    m_pVideoStream = nullptr;
 
     if ((!m_FormatContextWasGiven) && m_pFormatContext) {
         avformat_close_input(&m_pFormatContext);
@@ -131,7 +134,8 @@ bool MovieDecoder::initializeVideo()
     }
 
     m_pVideoCodecContext = avcodec_alloc_context3(m_pVideoCodec);
-    avcodec_parameters_to_context(m_pVideoCodecContext, m_pFormatContext->streams[m_VideoStream]->codecpar);
+    m_pVideoStream = m_pFormatContext->streams[m_VideoStream];
+    avcodec_parameters_to_context(m_pVideoCodecContext, m_pVideoStream->codecpar);
 
     if (m_pVideoCodec == nullptr) {
         // set to nullptr, otherwise avcodec_close(m_pVideoCodecContext) crashes
@@ -250,6 +254,41 @@ bool MovieDecoder::decodeVideoPacket()
 
     return true;
 }
+
+QImageIOHandler::Transformations MovieDecoder::transformations()
+{
+    QImageIOHandler::Transformations ret = QImageIOHandler::TransformationNone;
+    if (!m_pVideoStream) {
+        qCWarning(ffmpegthumbs_LOG) << "No video stream!";
+        return ret;
+    }
+
+    for (int i=0; i<m_pVideoStream->nb_side_data; i++) {
+        if (m_pVideoStream->side_data[i].type != AV_PKT_DATA_DISPLAYMATRIX) {
+            continue;
+        }
+        if (m_pVideoStream->side_data[i].size != sizeof(int32_t) * 9) {
+            qCWarning(ffmpegthumbs_LOG) << "Invalid display matrix size" << m_pVideoStream->side_data[i].size << "expected" << sizeof(int32_t) * 9;
+            continue;
+        }
+        int32_t *matrix = reinterpret_cast<int32_t*>(m_pVideoStream->side_data[i].data);
+        double rotation = av_display_rotation_get(matrix);
+        if (qFuzzyCompare(rotation, 0.)) {
+            ret |= QImageIOHandler::TransformationNone;
+        } else if (qFuzzyCompare(rotation, 90.)) {
+            ret |= QImageIOHandler::TransformationRotate270;
+        } else if (qFuzzyCompare(rotation, 180.) || qFuzzyCompare(rotation, -180.)) {
+            ret |= QImageIOHandler::TransformationRotate180;
+        } else if (qFuzzyCompare(rotation, -90.)) {
+            ret |= QImageIOHandler::TransformationRotate90;
+        } else {
+            qCWarning(ffmpegthumbs_LOG) << "Unhandled rotation" << rotation;
+            continue;
+        }
+    }
+    return ret;
+}
+
 
 bool MovieDecoder::getVideoPacket()
 {

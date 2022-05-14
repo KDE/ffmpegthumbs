@@ -9,6 +9,7 @@
 
 #include "videoframe.h"
 #include <QString>
+#include <QImageIOHandler>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -39,6 +40,8 @@ public:
     void initialize(const QString& filename);
     void destroy();
     bool getInitialized();
+
+    QImageIOHandler::Transformations transformations();
 
 private:
     bool initializeVideo();

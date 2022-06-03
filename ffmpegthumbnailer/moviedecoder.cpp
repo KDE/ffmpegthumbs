@@ -59,12 +59,12 @@ void MovieDecoder::initialize(const QString& filename)
     QFileInfo fileInfo(filename);
 
     if ((!m_FormatContextWasGiven) && avformat_open_input(&m_pFormatContext, fileInfo.absoluteFilePath().toLocal8Bit().data(), nullptr, nullptr) != 0) {
-        qDebug() <<  "Could not open input file: " << fileInfo.absoluteFilePath();
+        qCDebug(ffmpegthumbs_LOG) <<  "Could not open input file: " << fileInfo.absoluteFilePath();
         return;
     }
 
     if (avformat_find_stream_info(m_pFormatContext, nullptr) < 0) {
-        qDebug() << "Could not find stream information";
+        qCDebug(ffmpegthumbs_LOG) << "Could not find stream information";
         return;
     }
 
@@ -129,7 +129,7 @@ bool MovieDecoder::initializeVideo()
 {
     m_VideoStream = av_find_best_stream(m_pFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, &m_pVideoCodec, 0);
     if (m_VideoStream < 0) {
-        qDebug() << "Could not find video stream";
+        qCDebug(ffmpegthumbs_LOG) << "Could not find video stream";
         return false;
     }
 
@@ -140,14 +140,14 @@ bool MovieDecoder::initializeVideo()
     if (m_pVideoCodec == nullptr) {
         // set to nullptr, otherwise avcodec_close(m_pVideoCodecContext) crashes
         m_pVideoCodecContext = nullptr;
-        qDebug() << "Video Codec not found";
+        qCDebug(ffmpegthumbs_LOG) << "Video Codec not found";
         return false;
     }
 
     m_pVideoCodecContext->workaround_bugs = 1;
 
     if (avcodec_open2(m_pVideoCodecContext, m_pVideoCodec, nullptr) < 0) {
-        qDebug() << "Could not open video codec";
+        qCDebug(ffmpegthumbs_LOG) << "Could not open video codec";
         return false;
     }
 
@@ -197,7 +197,7 @@ void MovieDecoder::seek(int timeInSeconds)
     if (ret >= 0) {
         avcodec_flush_buffers(m_pVideoCodecContext);
     } else {
-        qDebug() << "Seeking in video failed";
+        qCDebug(ffmpegthumbs_LOG) << "Seeking in video failed";
         return;
     }
 
@@ -218,7 +218,7 @@ void MovieDecoder::seek(int timeInSeconds)
     } while ((!gotFrame || !m_pFrame->key_frame) && keyFrameAttempts < 200);
 
     if (gotFrame == 0) {
-        qDebug() << "Seeking in video failed";
+        qCDebug(ffmpegthumbs_LOG) << "Seeking in video failed";
     }
 }
 
@@ -232,7 +232,7 @@ bool MovieDecoder::decodeVideoFrame()
     }
 
     if (!frameFinished) {
-        qDebug() << "decodeVideoFrame() failed: frame not finished";
+        qCDebug(ffmpegthumbs_LOG) << "decodeVideoFrame() failed: frame not finished";
     }
 
     return frameFinished;
@@ -342,7 +342,7 @@ bool MovieDecoder::initFilterGraph(enum AVPixelFormat pixfmt, int width, int hei
 
     int ret = avfilter_graph_parse2(m_filterGraph, arguments.constData(), &inputs, &outputs);
     if (ret < 0) {
-        qWarning() << "Unable to parse filter graph";
+        qCWarning(ffmpegthumbs_LOG) << "Unable to parse filter graph";
         return false;
     }
 
@@ -351,14 +351,14 @@ bool MovieDecoder::initFilterGraph(enum AVPixelFormat pixfmt, int width, int hei
 
     ret = avfilter_graph_config(m_filterGraph, nullptr);
     if (ret < 0) {
-        qWarning() << "Unable to validate filter graph";
+        qCWarning(ffmpegthumbs_LOG) << "Unable to validate filter graph";
         return false;
     }
 
     m_bufferSourceContext = avfilter_graph_get_filter(m_filterGraph, "Parsed_buffer_0");
     m_bufferSinkContext = avfilter_graph_get_filter(m_filterGraph, "Parsed_buffersink_2");
     if (!m_bufferSourceContext || !m_bufferSinkContext) {
-        qWarning() << "Unable to get source or sink";
+        qCWarning(ffmpegthumbs_LOG) << "Unable to get source or sink";
         return false;
     }
     m_filterFrame = av_frame_alloc();
@@ -429,7 +429,7 @@ void MovieDecoder::convertAndScaleFrame(AVPixelFormat format, int scaledSize, bo
                                format, SWS_BICUBIC, nullptr, nullptr, nullptr);
 
     if (nullptr == scaleContext) {
-        qDebug() << "Failed to create resize context";
+        qCDebug(ffmpegthumbs_LOG) << "Failed to create resize context";
         return;
     }
 

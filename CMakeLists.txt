@@ -69,7 +69,7 @@ ecm_qt_install_logging_categories(
 
 ########### install files ###############
 
-install(FILES  ffmpegthumbs.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES  ffmpegthumbs.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 install(FILES org.kde.ffmpegthumbs.metainfo.xml
         DESTINATION ${KDE_INSTALL_METAINFODIR})

@@ -17,7 +17,6 @@
 #include <QFormLayout>
 #include <QImage>
 #include <QLineEdit>
-#include <QRegExpValidator>
 #include <QSpinBox>
 #include <KLocalizedString>
 

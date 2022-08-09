@@ -11,8 +11,6 @@
 
 #include <limits>
 
-#include <mp4file.h>
-
 #include <QCheckBox>
 #include <QFormLayout>
 #include <QImage>
@@ -21,6 +19,8 @@
 #include <KLocalizedString>
 
 extern "C" {
+#include <libavformat/avformat.h>
+#include <libavutil/dict.h>
 #include <libavutil/log.h>
 }
 
@@ -115,23 +115,55 @@ bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, Q
 
     // Try reading thumbnail embedded into video file
     QByteArray ba = path.toLocal8Bit();
-    TagLib::MP4::File f(ba.data(), false);
+    AVFormatContext* ct = avformat_alloc_context();
+    AVPacket* pic = nullptr;
 
     // No matter the seqIdx, we have to know if the video has an embedded cover, even if we then don't return
     // it. We could cache it to avoid repeating this for higher seqIdx values, but this should be fast enough
     // to not be noticeable and caching adds unnecessary complexity.
-    if (f.isValid()) {
-        TagLib::MP4::Tag* tag = f.tag();
-        TagLib::MP4::ItemListMap itemsListMap = tag->itemListMap();
-        TagLib::MP4::Item coverItem = itemsListMap["covr"];
-        TagLib::MP4::CoverArtList coverArtList = coverItem.toCoverArtList();
+    if (ct && !avformat_open_input(&ct,ba.data(), nullptr, nullptr)) {
 
-        if (!coverArtList.isEmpty()) {
-            TagLib::MP4::CoverArt coverArt = coverArtList.front();
-            img.loadFromData((const uchar *)coverArt.data().data(),
-                         coverArt.data().size());
+        // Using an priority system based on size or filename (matroska specification) to select the most suitable picture
+        int bestPrio = 0;
+        for (size_t i = 0; i < ct->nb_streams; ++i) {
+            if (ct->streams[i]->disposition & AV_DISPOSITION_ATTACHED_PIC) {
+                int prio = 0;
+                AVDictionaryEntry* fname = av_dict_get(ct->streams[i]->metadata, "filename", nullptr ,0);
+                if (fname) {
+                    QString filename(fname->value);
+                    QString noextname = filename.section('.', 0);
+                    // Prefer landscape and larger
+                    if (noextname == "cover_land") {
+                        prio = std::numeric_limits<int>::max();
+                    }
+                    else if (noextname == "small_cover_land") {
+                        prio = std::numeric_limits<int>::max()-1;
+                    }
+                    else if (noextname == "cover") {
+                        prio = std::numeric_limits<int>::max()-2;
+                    }
+                    else if (noextname == "small_cover") {
+                        prio = std::numeric_limits<int>::max()-3;
+                    }
+                    else {
+                        prio = ct->streams[i]->attached_pic.size;
+                    }
+                }
+                else {
+                    prio = ct->streams[i]->attached_pic.size;
+                }
+                if (prio > bestPrio) {
+                    pic = &(ct->streams[i]->attached_pic);
+                    bestPrio = prio;
+                }
+            }
         }
     }
+    
+    if (pic) {
+        img.loadFromData(pic->data, pic->size);
+    }
+    avformat_close_input(&ct);
 
     if (!img.isNull()) {
         // Video file has an embedded thumbnail -> return it for seqIdx=0 and shift the regular

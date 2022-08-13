@@ -30,7 +30,6 @@ public:
     FFMpegThumbnailer();
     ~FFMpegThumbnailer() override;
     bool create(const QString& path, int width, int height, QImage& img) override;
-    Flags flags() const override;
 
 private:
     void updateSequenceIndexWraparoundPoint(float offset);

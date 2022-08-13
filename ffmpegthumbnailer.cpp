@@ -171,11 +171,6 @@ bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, Q
     return false;
 }
 
-ThumbCreator::Flags FFMpegThumbnailer::flags() const
-{
-    return (Flags)(None);
-}
-
 void FFMpegThumbnailer::updateSequenceIndexWraparoundPoint(float offset)
 {
     float wraparoundPoint = offset;

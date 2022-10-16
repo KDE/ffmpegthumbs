@@ -417,8 +417,12 @@ void MovieDecoder::getScaledVideoFrame(int scaledSize, bool maintainAspectRatio,
     videoFrame.lineSize = m_pFrame->linesize[0];
 
     videoFrame.frameData.clear();
-    videoFrame.frameData.resize(videoFrame.lineSize * videoFrame.height);
-    memcpy((&(videoFrame.frameData.front())), m_pFrame->data[0], videoFrame.lineSize * videoFrame.height);
+    const auto frameSize = videoFrame.lineSize * videoFrame.height;
+    if (frameSize < 1) {
+        return; // calling front() on an empty vector is undefined behavior; return empty frame data instead
+    }
+    videoFrame.frameData.resize(frameSize);
+    memcpy((&(videoFrame.frameData.front())), m_pFrame->data[0], frameSize);
 }
 
 void MovieDecoder::convertAndScaleFrame(AVPixelFormat format, int scaledSize, bool maintainAspectRatio, int& scaledWidth, int& scaledHeight)

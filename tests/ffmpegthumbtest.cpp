@@ -25,7 +25,7 @@ int main(int argc, char **argv)
         FFMpegThumbnailer *thumbnailer = new FFMpegThumbnailer();
         thumbnailer->create(inputFilename, 128, 128, image);
         QFileInfo fileInfo(inputFilename);
-        image.save(fileInfo.baseName() + ".png");
+        image.save(fileInfo.baseName() + QStringLiteral(".png"));
         delete thumbnailer;
     } else {
         cout << "Usage:" << arguments.at(0).toLocal8Bit().data() << " filename" << endl;

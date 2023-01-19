@@ -105,7 +105,7 @@ bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, Q
     // later if we don't have one.
     seqIdx %= static_cast<int>(seekPercentages.size()) + 1;
 
-    const QString cacheKey = QString("%1$%2@%3").arg(path).arg(seqIdx).arg(width);
+    const QString cacheKey = QStringLiteral("%1$%2@%3").arg(path).arg(seqIdx).arg(width);
 
     QImage* cachedImg = m_thumbCache[cacheKey];
     if (cachedImg) {
@@ -130,19 +130,19 @@ bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, Q
                 int prio = 0;
                 AVDictionaryEntry* fname = av_dict_get(ct->streams[i]->metadata, "filename", nullptr ,0);
                 if (fname) {
-                    QString filename(fname->value);
-                    QString noextname = filename.section('.', 0);
+                    QString filename(QString::fromUtf8(fname->value));
+                    QString noextname = filename.section(QLatin1Char('.'), 0);
                     // Prefer landscape and larger
-                    if (noextname == "cover_land") {
+                    if (noextname == QStringLiteral("cover_land")) {
                         prio = std::numeric_limits<int>::max();
                     }
-                    else if (noextname == "small_cover_land") {
+                    else if (noextname == QStringLiteral("small_cover_land")) {
                         prio = std::numeric_limits<int>::max()-1;
                     }
-                    else if (noextname == "cover") {
+                    else if (noextname == QStringLiteral("cover")) {
                         prio = std::numeric_limits<int>::max()-2;
                     }
-                    else if (noextname == "small_cover") {
+                    else if (noextname == QStringLiteral("small_cover")) {
                         prio = std::numeric_limits<int>::max()-3;
                     }
                     else {

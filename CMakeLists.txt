@@ -48,6 +48,11 @@ target_sources(ffmpegthumbs PRIVATE
   ffmpegthumbnailer/moviedecoder.cpp
   ffmpegthumbnailer/imagewriter.cpp
   ffmpegthumbnailer/videothumbnailer.cpp
+  ffmpegthumbnailer.h
+  ffmpegthumbnailer/filmstripfilter.h
+  ffmpegthumbnailer/moviedecoder.h
+  ffmpegthumbnailer/imagewriter.h
+  ffmpegthumbnailer/videothumbnailer.h
 )
 
 ecm_qt_declare_logging_category(ffmpegthumbs

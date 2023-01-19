@@ -10,7 +10,7 @@ set(RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_
 project(ffmpegthumbs VERSION ${RELEASE_SERVICE_VERSION})
 
 set(QT_MIN_VERSION "5.15.0")
-set(KF_MIN_VERSION "5.83.0")
+set(KF_MIN_VERSION "5.92.0")
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -21,6 +21,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 
 include(ECMQtDeclareLoggingCategory)
 include(FeatureSummary)
+include(ECMDeprecationSettings)
 
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
 find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO I18n Config)
@@ -34,6 +35,10 @@ include_directories(
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D __STDC_CONSTANT_MACROS")
 
 add_definitions(-DTRANSLATION_DOMAIN=\"ffmpegthumbs\")
+set(KDE_COMPILERSETTINGS_LEVEL "5.82.0")
+ecm_set_disabled_deprecation_versions(QT 5.15.2
+    KF 5.81
+)
 
 add_library(ffmpegthumbs MODULE)
 

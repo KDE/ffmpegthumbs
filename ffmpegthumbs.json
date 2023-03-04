@@ -1,6 +1,6 @@
 {
     "CacheThumbnail": true,
-    "HandleSequences": "true",
+    "HandleSequences": true,
     "IgnoreMaximumSize": true,
     "KPlugin": {
         "MimeTypes": [
@@ -80,11 +80,6 @@
         "Name[uk]": "Файли відео (ffmpegthumbs)",
         "Name[x-test]": "xxVideo Files (ffmpegthumbs)xx",
         "Name[zh_CN]": "视频文件 (ffmpegthumbs)",
-        "Name[zh_TW]": "影像檔 (ffmpegthumbs)",
-        "ServiceTypes": [
-            "ThumbCreator"
-        ]
-    },
-    "MimeType": "application/mxf;application/ogg;application/sdp;application/smil;application/streamingmedia;application/vnd.apple.mpegurl;application/vnd.ms-asf;application/vnd.rn-realmedia-vbr;application/vnd.rn-realmedia;application/x-cue;application/x-extension-m4a;application/x-extension-mp4;application/x-matroska;application/x-mpegurl;application/x-ogg;application/x-ogm-video;application/x-ogm;application/x-shorten;application/x-smil;application/x-streamingmedia;video/*;",
-    "ThumbnailerVersion": "2"
+        "Name[zh_TW]": "影像檔 (ffmpegthumbs)"
+    }
 }

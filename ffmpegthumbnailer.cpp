@@ -11,12 +11,13 @@
 
 #include <limits>
 
+#include <KLocalizedString>
+#include <KPluginFactory>
 #include <QCheckBox>
 #include <QFormLayout>
 #include <QImage>
 #include <QLineEdit>
 #include <QSpinBox>
-#include <KLocalizedString>
 
 extern "C" {
 #include <libavformat/avformat.h>
@@ -60,38 +61,23 @@ struct FFmpegLogHandler {
 };
 } //namespace
 
-extern "C"
-{
-    Q_DECL_EXPORT ThumbCreator *new_creator()
-    {
-        // This is a threadsafe way to ensure that we only register it once
-        static FFmpegLogHandler handler;
-
-        return new FFMpegThumbnailer();
-    }
-}
-
-FFMpegThumbnailer::FFMpegThumbnailer()
+FFMpegThumbnailer::FFMpegThumbnailer(QObject *parent, const QVariantList &args)
+    : KIO::ThumbnailCreator(parent, args)
 {
     FFMpegThumbnailerSettings* settings = FFMpegThumbnailerSettings::self();
     if (settings->filmstrip()) {
         m_Thumbnailer.addFilter(&m_FilmStrip);
     }
     m_thumbCache.setMaxCost(settings->cacheSize());
-
-    // Assume that the video file has an embedded thumb, in which case it gets inserted before the
-    // regular seek percentage-based thumbs. If we find out that the video doesn't have one, we can
-    // correct that overestimation.
-    updateSequenceIndexWraparoundPoint(1.0f);
 }
 
 FFMpegThumbnailer::~FFMpegThumbnailer()
 {
 }
 
-bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, QImage& img)
+KIO::ThumbnailResult FFMpegThumbnailer::create(const KIO::ThumbnailRequest &request)
 {
-    int seqIdx = static_cast<int>(sequenceIndex());
+    int seqIdx = static_cast<int>(request.sequenceIndex());
     if (seqIdx < 0) {
         seqIdx = 0;
     }
@@ -105,12 +91,12 @@ bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, Q
     // later if we don't have one.
     seqIdx %= static_cast<int>(seekPercentages.size()) + 1;
 
-    const QString cacheKey = QStringLiteral("%1$%2@%3").arg(path).arg(seqIdx).arg(width);
+    const QString path = request.url().toLocalFile();
+    const QString cacheKey = QStringLiteral("%1$%2@%3").arg(path).arg(request.sequenceIndex()).arg(request.targetSize().width());
 
     QImage* cachedImg = m_thumbCache[cacheKey];
     if (cachedImg) {
-        img = *cachedImg;
-        return true;
+        return pass(*cachedImg);
     }
 
     // Try reading thumbnail embedded into video file
@@ -159,59 +145,67 @@ bool FFMpegThumbnailer::create(const QString& path, int width, int /*height*/, Q
             }
         }
     }
-    
+
+    auto res = KIO::ThumbnailResult::fail();
     if (pic) {
+        QImage img;
         img.loadFromData(pic->data, pic->size);
+        res = pass(img);
     }
     avformat_close_input(&ct);
 
-    if (!img.isNull()) {
+    float wraparoundPoint = 1.0f;
+    if (!res.image().isNull()) {
         // Video file has an embedded thumbnail -> return it for seqIdx=0 and shift the regular
         // seek percentages one to the right
 
-        updateSequenceIndexWraparoundPoint(1.0f);
+        res.setSequenceIndexWraparoundPoint(updatedSequenceIndexWraparoundPoint(1.0f));
 
         if (seqIdx == 0) {
-            return true;
+            return res;
         }
 
         seqIdx--;
     } else {
-        updateSequenceIndexWraparoundPoint(0.0f);
+        wraparoundPoint = updatedSequenceIndexWraparoundPoint(0.0f);
     }
 
     // The previous modulo could be wrong now if the video had an embedded thumbnail.
     seqIdx %= seekPercentages.size();
 
-    m_Thumbnailer.setThumbnailSize(width);
+    m_Thumbnailer.setThumbnailSize(request.targetSize().width());
     m_Thumbnailer.setSeekPercentage(seekPercentages[seqIdx]);
     //Smart frame selection is very slow compared to the fixed detection
     //TODO: Use smart detection if the image is single colored.
     //m_Thumbnailer.setSmartFrameSelection(true);
+    QImage img;
     m_Thumbnailer.generateThumbnail(path, img);
 
     if (!img.isNull()) {
         // seqIdx 0 will be served from KIO's regular thumbnail cache.
-        if (static_cast<int>(sequenceIndex()) != 0) {
+        if (static_cast<int>(request.sequenceIndex()) != 0) {
             const int cacheCost = static_cast<int>((img.sizeInBytes() + 1023) / 1024);
             m_thumbCache.insert(cacheKey, new QImage(img), cacheCost);
         }
 
-        return true;
+        return pass(img, wraparoundPoint);
     }
 
-    return false;
+    return KIO::ThumbnailResult::fail();
 }
 
-void FFMpegThumbnailer::updateSequenceIndexWraparoundPoint(float offset)
+float FFMpegThumbnailer::updatedSequenceIndexWraparoundPoint(float offset)
 {
     float wraparoundPoint = offset;
-
     if (!FFMpegThumbnailerSettings::sequenceSeekPercentages().isEmpty()) {
         wraparoundPoint += FFMpegThumbnailerSettings::sequenceSeekPercentages().size();
     } else {
         wraparoundPoint += 1.0f;
     }
 
-    setSequenceIndexWraparoundPoint(wraparoundPoint);
+    return wraparoundPoint;
 }
+
+K_PLUGIN_CLASS_WITH_JSON(FFMpegThumbnailer, "ffmpegthumbs.json")
+
+#include "ffmpegthumbnailer.moc"

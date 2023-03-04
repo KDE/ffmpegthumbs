@@ -40,7 +40,7 @@ ecm_set_disabled_deprecation_versions(QT 5.15.2
     KF 5.81
 )
 
-add_library(ffmpegthumbs MODULE)
+kcoreaddons_add_plugin(ffmpegthumbs INSTALL_NAMESPACE "kf5/thumbcreator")
 
 target_sources(ffmpegthumbs PRIVATE
   ffmpegthumbnailer.cpp
@@ -77,8 +77,6 @@ ecm_qt_install_logging_categories(
 )
 
 ########### install files ###############
-
-install(FILES  ffmpegthumbs.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 install(FILES org.kde.ffmpegthumbs.metainfo.xml
         DESTINATION ${KDE_INSTALL_METAINFODIR})

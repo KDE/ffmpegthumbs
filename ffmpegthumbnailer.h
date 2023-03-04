@@ -7,10 +7,9 @@
 #ifndef KFFMPEG_THUMBNAILER_H
 #define KFFMPEG_THUMBNAILER_H
 
-#include <QObject>
+#include <KIO/ThumbnailCreator>
 #include <QCache>
-// KF
-#include <KIO/ThumbSequenceCreator>
+#include <QObject>
 
 #include <ffmpegthumbnailer/videothumbnailer.h>
 #include <ffmpegthumbnailer/filmstripfilter.h>
@@ -19,7 +18,7 @@ class QCheckBox;
 class QLineEdit;
 class QSpinBox;
 
-class FFMpegThumbnailer : public QObject, public ThumbSequenceCreator
+class FFMpegThumbnailer : public KIO::ThumbnailCreator
 {
     Q_OBJECT
 
@@ -27,12 +26,22 @@ private:
     typedef QCache<QString, QImage> ThumbCache;
 
 public:
-    FFMpegThumbnailer();
+    explicit FFMpegThumbnailer(QObject *parent, const QVariantList &args);
     ~FFMpegThumbnailer() override;
-    bool create(const QString& path, int width, int height, QImage& img) override;
+    KIO::ThumbnailResult create(const KIO::ThumbnailRequest &request) override;
 
 private:
-    void updateSequenceIndexWraparoundPoint(float offset);
+    float updatedSequenceIndexWraparoundPoint(float offset);
+
+    // Assume that the video file has an embedded thumb, in which case it gets inserted before the
+    // regular seek percentage-based thumbs. If we find out that the video doesn't have one, we can
+    // correct that overestimation.
+    KIO::ThumbnailResult pass(const QImage &img, float sequenceIndexWraparoundPoint = 1.0f)
+    {
+        auto res = KIO::ThumbnailResult::pass(img);
+        res.setSequenceIndexWraparoundPoint(sequenceIndexWraparoundPoint);
+        return res;
+    }
 
 private:
     ffmpegthumbnailer::VideoThumbnailer m_Thumbnailer;

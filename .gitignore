@@ -9,3 +9,4 @@ CMakeLists.txt.user*
 .cache
 .clangd
 compile_commands.json
+.clang-format

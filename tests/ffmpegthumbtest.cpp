@@ -9,6 +9,7 @@
 
 #include <QCoreApplication>
 #include <QFileInfo>
+#include <QMimeDatabase>
 #include <QStringList>
 #include <iostream>
 
@@ -21,15 +22,15 @@ int main(int argc, char **argv)
 
     if (arguments.count() > 1) {
         QString inputFilename(arguments.last());
-        QImage image;
-        FFMpegThumbnailer *thumbnailer = new FFMpegThumbnailer();
-        thumbnailer->create(inputFilename, 128, 128, image);
+        FFMpegThumbnailer thumbnailer(&app, QVariantList());
+        QMimeDatabase db;
+        const QString mime = db.mimeTypeForFile(inputFilename).name();
+        KIO::ThumbnailRequest request(QUrl::fromLocalFile(inputFilename), QSize(128, 128), mime, 0, 0);
+        const auto res = thumbnailer.create(request);
         QFileInfo fileInfo(inputFilename);
-        image.save(fileInfo.baseName() + QStringLiteral(".png"));
-        delete thumbnailer;
+        res.image().save(fileInfo.baseName() + QStringLiteral(".png"));
     } else {
         cout << "Usage:" << arguments.at(0).toLocal8Bit().data() << " filename" << endl;
     }
     return 0;
 }
-

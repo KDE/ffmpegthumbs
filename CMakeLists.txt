@@ -24,7 +24,7 @@ include(FeatureSummary)
 include(ECMDeprecationSettings)
 
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
-find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO I18n Config)
+find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO I18n Config)
 find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
 
 include_directories(
@@ -40,7 +40,7 @@ ecm_set_disabled_deprecation_versions(QT 5.15.2
     KF 5.81
 )
 
-kcoreaddons_add_plugin(ffmpegthumbs INSTALL_NAMESPACE "kf5/thumbcreator")
+kcoreaddons_add_plugin(ffmpegthumbs INSTALL_NAMESPACE "kf${QT_MAJOR_VERSION}/thumbcreator")
 
 target_sources(ffmpegthumbs PRIVATE
   ffmpegthumbnailer.cpp
@@ -66,7 +66,20 @@ ecm_qt_declare_logging_category(ffmpegthumbs
 
 kconfig_add_kcfg_files(ffmpegthumbs ffmpegthumbnailersettings5.kcfgc)
 
-target_link_libraries(ffmpegthumbs Qt::Core Qt::Gui KF5::KIOWidgets KF5::KIOCore KF5::I18n KF5::ConfigCore KF5::ConfigGui ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES})
+target_link_libraries(ffmpegthumbs
+    Qt::Core
+    Qt::Gui
+    KF${QT_MAJOR_VERSION}::KIOWidgets
+    KF${QT_MAJOR_VERSION}::KIOCore
+    KF${QT_MAJOR_VERSION}::I18n
+    KF${QT_MAJOR_VERSION}::ConfigCore
+    KF${QT_MAJOR_VERSION}::ConfigGui
+    ${AVUTIL_LIBRARIES}
+    ${AVFILTER_LIBRARIES}
+    ${AVFORMAT_LIBRARIES}
+    ${AVCODEC_LIBRARIES}
+    ${SWSCALE_LIBRARIES}
+)
 
 install(FILES ffmpegthumbnailersettings5.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(TARGETS ffmpegthumbs DESTINATION ${KDE_INSTALL_PLUGINDIR})

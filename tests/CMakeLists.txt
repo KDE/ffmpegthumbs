@@ -21,8 +21,17 @@ kconfig_add_kcfg_files(ffmpegthumbtest ${CMAKE_CURRENT_SOURCE_DIR}/../ffmpegthum
 
 target_include_directories(ffmpegthumbtest PRIVATE ..)
 
-target_link_libraries(ffmpegthumbtest Qt::Core Qt::Gui KF5::KIOWidgets KF5::KIOCore KF5::I18n KF5::ConfigCore KF5::ConfigGui ${AVUTIL_LIBRARIES} ${AVFILTER_LIBRARIES} ${AVFORMAT_LIBRARIES} ${AVCODEC_LIBRARIES} ${SWSCALE_LIBRARIES})
-
-
-
-
+target_link_libraries(ffmpegthumbtest
+    Qt::Core
+    Qt::Gui
+    KF${QT_MAJOR_VERSION}::KIOWidgets
+    KF${QT_MAJOR_VERSION}::KIOCore
+    KF${QT_MAJOR_VERSION}::I18n
+    KF${QT_MAJOR_VERSION}::ConfigCore
+    KF${QT_MAJOR_VERSION}::ConfigGui
+    ${AVUTIL_LIBRARIES}
+    ${AVFILTER_LIBRARIES}
+    ${AVFORMAT_LIBRARIES}
+    ${AVCODEC_LIBRARIES}
+    ${SWSCALE_LIBRARIES}
+)

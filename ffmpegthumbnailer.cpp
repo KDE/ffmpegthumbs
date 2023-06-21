@@ -209,3 +209,4 @@ float FFMpegThumbnailer::updatedSequenceIndexWraparoundPoint(float offset)
 K_PLUGIN_CLASS_WITH_JSON(FFMpegThumbnailer, "ffmpegthumbs.json")
 
 #include "ffmpegthumbnailer.moc"
+#include "moc_ffmpegthumbnailer.cpp"

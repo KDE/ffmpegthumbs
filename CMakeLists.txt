@@ -82,7 +82,6 @@ target_link_libraries(ffmpegthumbs
 )
 
 install(FILES ffmpegthumbnailersettings5.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(TARGETS ffmpegthumbs DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 ecm_qt_install_logging_categories(
   EXPORT ffmpegthumbs

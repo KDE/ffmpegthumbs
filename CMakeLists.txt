@@ -24,7 +24,7 @@ include(FeatureSummary)
 include(ECMDeprecationSettings)
 
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
-find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO I18n Config)
+find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO Config)
 find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
 
 include_directories(
@@ -71,7 +71,6 @@ target_link_libraries(ffmpegthumbs
     Qt::Gui
     KF${QT_MAJOR_VERSION}::KIOWidgets
     KF${QT_MAJOR_VERSION}::KIOCore
-    KF${QT_MAJOR_VERSION}::I18n
     KF${QT_MAJOR_VERSION}::ConfigCore
     KF${QT_MAJOR_VERSION}::ConfigGui
     ${AVUTIL_LIBRARIES}

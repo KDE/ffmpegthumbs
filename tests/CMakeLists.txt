@@ -26,7 +26,6 @@ target_link_libraries(ffmpegthumbtest
     Qt::Gui
     KF${QT_MAJOR_VERSION}::KIOWidgets
     KF${QT_MAJOR_VERSION}::KIOCore
-    KF${QT_MAJOR_VERSION}::I18n
     KF${QT_MAJOR_VERSION}::ConfigCore
     KF${QT_MAJOR_VERSION}::ConfigGui
     ${AVUTIL_LIBRARIES}

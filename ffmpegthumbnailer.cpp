@@ -11,7 +11,6 @@
 
 #include <limits>
 
-#include <KLocalizedString>
 #include <KPluginFactory>
 #include <QCheckBox>
 #include <QFormLayout>

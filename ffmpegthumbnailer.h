@@ -11,8 +11,8 @@
 #include <QCache>
 #include <QObject>
 
-#include <ffmpegthumbnailer/videothumbnailer.h>
-#include <ffmpegthumbnailer/filmstripfilter.h>
+#include "ffmpegthumbnailer/videothumbnailer.h"
+#include "ffmpegthumbnailer/filmstripfilter.h"
 
 class QCheckBox;
 class QLineEdit;

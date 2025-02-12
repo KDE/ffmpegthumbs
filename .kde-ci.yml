@@ -8,7 +8,7 @@ Dependencies:
     'frameworks/kio': '@stable'
     'frameworks/kconfig': '@stable'
 
- - 'on': ['Linux/Qt6', 'FreeBSD/Qt6', 'Windows/Qt6']
+ - 'on': ['Linux/Qt6', 'Linux/Qt6Next', 'FreeBSD/Qt6', 'Windows/Qt6']
    'require':
     'frameworks/extra-cmake-modules': '@latest-kf6'
     'frameworks/kio': '@latest-kf6'

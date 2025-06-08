@@ -24,10 +24,10 @@ target_include_directories(ffmpegthumbtest PRIVATE ..)
 target_link_libraries(ffmpegthumbtest
     Qt::Core
     Qt::Gui
-    KF${QT_MAJOR_VERSION}::KIOWidgets
-    KF${QT_MAJOR_VERSION}::KIOCore
-    KF${QT_MAJOR_VERSION}::ConfigCore
-    KF${QT_MAJOR_VERSION}::ConfigGui
+    KF6::KIOWidgets
+    KF6::KIOCore
+    KF6::ConfigCore
+    KF6::ConfigGui
     ${AVUTIL_LIBRARIES}
     ${AVFILTER_LIBRARIES}
     ${AVFORMAT_LIBRARIES}

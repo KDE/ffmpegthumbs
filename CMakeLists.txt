@@ -9,14 +9,8 @@ set(RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_
 
 project(ffmpegthumbs VERSION ${RELEASE_SERVICE_VERSION})
 
-set(QT_MIN_VERSION "5.15.0")
-set(KF_MIN_VERSION "5.92.0")
-
-if (QT_MAJOR_VERSION STREQUAL "6")
-    set(QT_REQUIRED_VERSION "6.5.0")
-    set(KF_MIN_VERSION "5.240.0")
-endif()
-
+set(QT_MIN_VERSION "6.5.0")
+set(KF_MIN_VERSION "6.0.0")
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -29,8 +23,8 @@ include(ECMQtDeclareLoggingCategory)
 include(FeatureSummary)
 include(ECMDeprecationSettings)
 
-find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
-find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO Config)
+find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
+find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO Config)
 find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
 
 include_directories(
@@ -46,7 +40,7 @@ ecm_set_disabled_deprecation_versions(QT 5.15.2
     KF 5.81
 )
 
-kcoreaddons_add_plugin(ffmpegthumbs INSTALL_NAMESPACE "kf${QT_MAJOR_VERSION}/thumbcreator")
+kcoreaddons_add_plugin(ffmpegthumbs INSTALL_NAMESPACE "kf6/thumbcreator")
 
 target_sources(ffmpegthumbs PRIVATE
   ffmpegthumbnailer.cpp
@@ -75,10 +69,10 @@ kconfig_add_kcfg_files(ffmpegthumbs ffmpegthumbnailersettings5.kcfgc)
 target_link_libraries(ffmpegthumbs
     Qt::Core
     Qt::Gui
-    KF${QT_MAJOR_VERSION}::KIOWidgets
-    KF${QT_MAJOR_VERSION}::KIOCore
-    KF${QT_MAJOR_VERSION}::ConfigCore
-    KF${QT_MAJOR_VERSION}::ConfigGui
+    KF6::KIOWidgets
+    KF6::KIOCore
+    KF6::ConfigCore
+    KF6::ConfigGui
     ${AVUTIL_LIBRARIES}
     ${AVFILTER_LIBRARIES}
     ${AVFORMAT_LIBRARIES}

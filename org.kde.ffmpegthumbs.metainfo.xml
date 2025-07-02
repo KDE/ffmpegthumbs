@@ -31,6 +31,7 @@
   <name xml:lang="it">Generatore di miniature FFmpeg</name>
   <name xml:lang="ka">FFmpeg-ით მინიატურების შექმნა</name>
   <name xml:lang="ko">FFmpeg 섬네일 생성기</name>
+  <name xml:lang="lv">FFmpeg Thumbnailer</name>
   <name xml:lang="nl">FFmpeg miniatuurmaker</name>
   <name xml:lang="nn">FFmpeg Thumbnailer</name>
   <name xml:lang="pl">Twórca miniatur FFmpeg</name>
@@ -71,6 +72,7 @@
   <summary xml:lang="it">Generatore di miniature video che usa FFmpeg</summary>
   <summary xml:lang="ka">FFmpeg-ით ვიდეო მინიატურების შექმნა</summary>
   <summary xml:lang="ko">FFmpeg를 사용하여 동영상 섬네일 생성</summary>
+  <summary xml:lang="lv">Video sīktēlu ģenerators, kas izmanto „FFmpeg“</summary>
   <summary xml:lang="nl">Generator van videominiatuur met behulp van FFmpeg</summary>
   <summary xml:lang="nn">Generer miniatyrbilete for video via FFmpeg</summary>
   <summary xml:lang="pl">Twórca miniatur filmów wykorzystujący FFmpeg</summary>
@@ -113,6 +115,7 @@
     <p xml:lang="it">Il generatore di miniature FFmpeg è un generatore di miniature video per i gestori di file di KDE.</p>
     <p xml:lang="ka">FFmpeg მემინიატურე KDE-ის ფაილის მმართველებისთვის ვიდეოდან სურათებს იღებს.</p>
     <p xml:lang="ko">FFmpeg 섬네일 생성기는 KDE 파일 관리자의 동영상 섬네일 생성기입니다.</p>
+    <p xml:lang="lv">„FFmpeg Thumbnailer“ ir video sīktēlu ģenerators KDE datņu pārvaldniekiem.</p>
     <p xml:lang="nl">FFmpeg miniatuurmaker is een generator voor een videominiatuur voor KDE bestandsbeheerders.</p>
     <p xml:lang="nn">FFmpeg Thumbnailer er eit program for å generera video-miniatyrbilete for KDE-baserte filhandsamarar.</p>
     <p xml:lang="pl">Twórca miniatur FFmpeg jest twórcą miniatur filmów dla przeglądarek plików KDE.</p>

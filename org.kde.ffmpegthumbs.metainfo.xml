@@ -25,6 +25,7 @@
   <name xml:lang="gl">Xerador de miniaturas de FFmpeg</name>
   <name xml:lang="he">תמוניות מ־FFmpeg</name>
   <name xml:lang="hi">एफ़एफ़एमपेग लघुछविकार</name>
+  <name xml:lang="hu">FFmpeg Thumbnailer</name>
   <name xml:lang="ia">FFmpeg Thumbnailer (Generator de miniaturas de FFmpeg)</name>
   <name xml:lang="id">FFmpeg Thumbnailer</name>
   <name xml:lang="is">FFmpeg smámyndagerð</name>
@@ -66,6 +67,7 @@
   <summary xml:lang="gl">Xerador de miniaturas para vídeos que usa FFmpeg</summary>
   <summary xml:lang="he">יצרן תמונות ממוזערות לסרטונים בעזרת FFmpeg</summary>
   <summary xml:lang="hi">एफ़एफ़एमपेग द्वारा चलचित्र लघुछवि उत्पादक</summary>
+  <summary xml:lang="hu">FFmpeget használó bélyegképkészítő videókhoz</summary>
   <summary xml:lang="ia">Generator  de miniatura video usante FFmpeg</summary>
   <summary xml:lang="id">Penghasil thumbnail video menggunakan FFmpeg</summary>
   <summary xml:lang="is">Gerð smámynda úr myndskeiðum með FFmpeg</summary>
@@ -109,6 +111,7 @@
     <p xml:lang="gl">O xerador de miniaturas de FFmpeg é un xerador de miniaturas para vídeos para xestores de ficheiros de KDE.</p>
     <p xml:lang="he">תמוניות מ־FFmpeg הוא יצרן תמונות תצוגה מקדימה ממוזערות למנהלי קבצים ב־KDE.</p>
     <p xml:lang="hi">एफ़एफ़एमपेग लघुछविकार केडीई फ़ाइल प्रबंधक के लिए एक चलचित्र लघुछवि उत्पादक है।</p>
+    <p xml:lang="hu">Az FFmpeg Thumbnailer egy videobélyegkép-készítő KDE fájlkezelőkhöz.</p>
     <p xml:lang="ia">FFmpeg Thumbnailer es un generator de miniaturas video per gerente de file de KDE.</p>
     <p xml:lang="id">FFmpeg Thumbnailer adalah sebuah penghasil thumbnail video untuk pengelolaan file KDE.</p>
     <p xml:lang="is">FFmpeg smámyndagerð útbýr smámyndir úr myndskeiðum fyrir skráastjóra KDE.</p>

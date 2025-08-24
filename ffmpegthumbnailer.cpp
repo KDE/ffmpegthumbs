@@ -12,11 +12,7 @@
 #include <limits>
 
 #include <KPluginFactory>
-#include <QCheckBox>
-#include <QFormLayout>
 #include <QImage>
-#include <QLineEdit>
-#include <QSpinBox>
 
 extern "C" {
 #include <libavformat/avformat.h>

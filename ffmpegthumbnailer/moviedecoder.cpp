@@ -89,7 +89,7 @@ void MovieDecoder::destroy()
 {
     deleteFilterGraph();
     if (m_pVideoCodecContext) {
-        avcodec_close(m_pVideoCodecContext);
+        avcodec_free_context(&m_pVideoCodecContext);
         m_pVideoCodecContext = nullptr;
     }
     m_pVideoStream = nullptr;
@@ -215,7 +215,7 @@ void MovieDecoder::seek(int timeInSeconds)
         }
 
         ++keyFrameAttempts;
-    } while ((!gotFrame || !m_pFrame->key_frame) && keyFrameAttempts < 200);
+    } while ((!gotFrame || !(m_pFrame->flags & AV_FRAME_FLAG_KEY)) && keyFrameAttempts < 200);
 
     if (gotFrame == 0) {
         qCDebug(ffmpegthumbs_LOG) << "Seeking in video failed";
@@ -263,15 +263,15 @@ QImageIOHandler::Transformations MovieDecoder::transformations()
         return ret;
     }
 
-    for (int i=0; i<m_pVideoStream->nb_side_data; i++) {
-        if (m_pVideoStream->side_data[i].type != AV_PKT_DATA_DISPLAYMATRIX) {
+    for (int i=0; i<m_pVideoStream->codecpar->nb_coded_side_data; i++) {
+        if (m_pVideoStream->codecpar->coded_side_data[i].type != AV_PKT_DATA_DISPLAYMATRIX) {
             continue;
         }
-        if (m_pVideoStream->side_data[i].size != sizeof(int32_t) * 9) {
-            qCWarning(ffmpegthumbs_LOG) << "Invalid display matrix size" << m_pVideoStream->side_data[i].size << "expected" << sizeof(int32_t) * 9;
+        if (m_pVideoStream->codecpar->coded_side_data[i].size != sizeof(int32_t) * 9) {
+            qCWarning(ffmpegthumbs_LOG) << "Invalid display matrix size" << m_pVideoStream->codecpar->coded_side_data[i].size << "expected" << sizeof(int32_t) * 9;
             continue;
         }
-        int32_t *matrix = reinterpret_cast<int32_t*>(m_pVideoStream->side_data[i].data);
+        int32_t *matrix = reinterpret_cast<int32_t*>(m_pVideoStream->codecpar->coded_side_data[i].data);
         double rotation = av_display_rotation_get(matrix);
         if (qFuzzyCompare(rotation, 0.)) {
             ret |= QImageIOHandler::TransformationNone;
@@ -404,7 +404,7 @@ bool MovieDecoder::processFilterGraph(AVFrame *dst, const AVFrame *src,
 
 void MovieDecoder::getScaledVideoFrame(int scaledSize, bool maintainAspectRatio, VideoFrame& videoFrame)
 {
-    if (m_pFrame->interlaced_frame) {
+    if (m_pFrame->flags & AV_FRAME_FLAG_INTERLACED) {
         processFilterGraph((AVFrame*) m_pFrame, (AVFrame*) m_pFrame, m_pVideoCodecContext->pix_fmt,
                               m_pVideoCodecContext->width, m_pVideoCodecContext->height);
     }

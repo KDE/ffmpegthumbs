@@ -25,7 +25,7 @@ include(ECMDeprecationSettings)
 
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO Config)
-find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT SWSCALE)
+find_package(FFmpeg REQUIRED COMPONENTS AVCODEC AVFORMAT SWSCALE)
 
 include_directories(
     ${FFMPEG_INCLUDE_DIRS}
@@ -69,15 +69,15 @@ kconfig_add_kcfg_files(ffmpegthumbs ffmpegthumbnailersettings5.kcfgc)
 target_link_libraries(ffmpegthumbs
     Qt::Core
     Qt::Gui
-    KF6::KIOWidgets
     KF6::KIOCore
+    KF6::KIOGui
     KF6::ConfigCore
     KF6::ConfigGui
-    ${AVUTIL_LIBRARIES}
     ${AVFILTER_LIBRARIES}
+    ${SWSCALE_LIBRARIES}
     ${AVFORMAT_LIBRARIES}
     ${AVCODEC_LIBRARIES}
-    ${SWSCALE_LIBRARIES}
+    ${AVUTIL_LIBRARIES}
 )
 
 install(FILES ffmpegthumbnailersettings5.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})

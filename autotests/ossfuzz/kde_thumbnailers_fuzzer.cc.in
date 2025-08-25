@@ -1,0 +1,53 @@
+/*
+ * SPDX-FileCopyrightText: 2025 Azhar Momin <azhar.momin@kdemail.net>
+ * SPDX-License-Identifier: LGPL-2.0-or-later
+ */
+
+#include <QByteArray>
+#include <QGuiApplication>
+#include <QMimeDatabase>
+#include <QSize>
+#include <QTemporaryFile>
+#include <QUrl>
+#include <QVariant>
+
+#include "@CREATOR_HEADER@"
+
+static void runThumbnailer(const QString &fileName, const QString &mimetype)
+{
+    QSize targetSize(128, 128);
+    qreal dpr = 1.0;
+    float sequenceIndex = 0.0f;
+
+    KIO::ThumbnailRequest request(QUrl::fromLocalFile(fileName), targetSize, mimetype, dpr, sequenceIndex);
+
+    @CREATOR@ thumbnailer(nullptr, {});
+    thumbnailer.create(request);
+}
+
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+{
+    int argc = 0;
+    QGuiApplication app(argc, nullptr);
+
+    QByteArray b(reinterpret_cast<const char *>(data), static_cast<int>(size));
+
+    QTemporaryFile f;
+    if (!f.open()) {
+        return 0;
+    }
+    f.write(b);
+    f.close();
+
+    QMimeDatabase mimeDb;
+    QMimeType mimetype = mimeDb.mimeTypeForData(b);
+
+    runThumbnailer(f.fileName(), mimetype.name());
+    for (const QString &ancestor : mimetype.allAncestors()) {
+        if (ancestor != QLatin1String("application/octet-stream")) {
+            runThumbnailer(f.fileName(), ancestor);
+        }
+    }
+
+    return 0;
+}

@@ -23,6 +23,9 @@ include(ECMQtDeclareLoggingCategory)
 include(FeatureSummary)
 include(ECMDeprecationSettings)
 
+option(BUILD_FUZZERS "Whether to the thumbnail build fuzzers" OFF)
+option(FUZZERS_USE_QT_MINIMAL_INTEGRATION_PLUGIN "Whether to use the Qt minimal integration plugin for fuzzers" OFF)
+
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui)
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS KIO Config)
 find_package(FFmpeg REQUIRED COMPONENTS AVCODEC AVFORMAT SWSCALE)
@@ -94,6 +97,10 @@ install(FILES org.kde.ffmpegthumbs.metainfo.xml
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
+endif()
+
+if(BUILD_FUZZERS)
+    add_subdirectory(autotests/ossfuzz)
 endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

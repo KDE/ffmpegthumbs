@@ -7,24 +7,33 @@
 #  FFMPEG_LIBRARIES     - Link these to use the required ffmpeg components.
 #  FFMPEG_DEFINITIONS   - Compiler switches required for using the required ffmpeg components.
 #
-# For each of the components it will additionally set.
+# For each of the components
 #   - AVCODEC
+#   - AVFILTER
 #   - AVDEVICE
 #   - AVFORMAT
 #   - AVUTIL
 #   - POSTPROCESS
 #   - SWSCALE
-# the following variables will be defined
+# the following variables will be defined:
 #  <component>_FOUND        - System has <component>
 #  <component>_INCLUDE_DIRS - Include directory necessary for using the <component> headers
 #  <component>_LIBRARIES    - Link these to use <component>
 #  <component>_DEFINITIONS  - Compiler switches required for using <component>
 #  <component>_VERSION      - The components version
 #
+# As the versions of the various FFmpeg components differ for a given release,
+# and CMake supports only one common version for all components, use the
+# following to specify required versions for multiple components:
+#
+# find_package(FFmpeg 57.48 COMPONENTS AVCODEC)
+# find_package(FFmpeg 57.40 COMPONENTS AVFORMAT)
+# find_package(FFmpeg 55.27 COMPONENTS AVUTIL)
+#
 # SPDX-FileCopyrightText: 2006 Matthias Kretz <kretz@kde.org>
 # SPDX-FileCopyrightText: 2008 Alexander Neundorf <neundorf@kde.org>
 # SPDX-FileCopyrightText: 2011 Michael Jansen <kde@michael-jansen.biz>
-#
+# SPDX-FileCopyrightText: 2021 Stefan Brüns <stefan.bruens@rwth-aachen.de>
 # SPDX-License-Identifier: BSD-3-Clause
 
 include(FindPackageHandleStandardArgs)
@@ -34,6 +43,17 @@ if (NOT FFmpeg_FIND_COMPONENTS)
   set(FFmpeg_FIND_COMPONENTS AVCODEC AVFORMAT AVUTIL)
 endif ()
 
+list(LENGTH FFmpeg_FIND_COMPONENTS _numComponents)
+if ((${_numComponents} GREATER 1) AND DEFINED ${FFmpeg_FIND_VERSION})
+  message(WARNING "Using a required version in combination with multiple COMPONENTS is not supported")
+  set(_FFmpeg_REQUIRED_VERSION 0)
+elseif (DEFINED FFmpeg_FIND_VERSION)
+  set(_FFmpeg_REQUIRED_VERSION ${FFmpeg_FIND_VERSION})
+else ()
+  set(_FFmpeg_REQUIRED_VERSION 0)
+endif ()
+set(_FFmpeg_ALL_COMPONENTS AVCODEC AVDEVICE AVFORMAT AVUTIL POSTPROC SWSCALE)
+
 #
 ### Macro: set_component_found
 #
@@ -41,10 +61,8 @@ endif ()
 #
 macro(set_component_found _component )
   if (${_component}_LIBRARIES AND ${_component}_INCLUDE_DIRS)
-    # message(STATUS "  - ${_component} found.")
     set(${_component}_FOUND TRUE)
-  else ()
-    # message(STATUS "  - ${_component} not found.")
+    set(FFmpeg_${_component}_FOUND TRUE)
   endif ()
 endmacro()
 
@@ -61,7 +79,7 @@ macro(find_component _component _pkgconfig _library _header)
      # in the FIND_PATH() and FIND_LIBRARY() calls
      find_package(PkgConfig)
      if (PKG_CONFIG_FOUND)
-       pkg_check_modules(PC_${_component} ${_pkgconfig})
+       pkg_check_modules(PC_${_component} QUIET ${_pkgconfig})
      endif ()
   endif (NOT WIN32)
 
@@ -92,7 +110,6 @@ macro(find_component _component _pkgconfig _library _header)
 
 endmacro()
 
-
 # Check for cached results. If there are skip the costly part.
 if (NOT FFMPEG_LIBRARIES)
 
@@ -106,14 +123,11 @@ if (NOT FFMPEG_LIBRARIES)
   find_component(POSTPROC libpostproc postproc libpostproc/postprocess.h)
 
   # Check if the required components were found and add their stuff to the FFMPEG_* vars.
-  foreach (_component ${FFmpeg_FIND_COMPONENTS})
+  foreach (_component ${_FFmpeg_ALL_COMPONENTS})
     if (${_component}_FOUND)
-      # message(STATUS "Required component ${_component} present.")
       set(FFMPEG_LIBRARIES   ${FFMPEG_LIBRARIES}   ${${_component}_LIBRARIES})
       set(FFMPEG_DEFINITIONS ${FFMPEG_DEFINITIONS} ${${_component}_DEFINITIONS})
       list(APPEND FFMPEG_INCLUDE_DIRS ${${_component}_INCLUDE_DIRS})
-    else ()
-      # message(STATUS "Required component ${_component} missing.")
     endif ()
   endforeach ()
 
@@ -131,18 +145,33 @@ if (NOT FFMPEG_LIBRARIES)
                    FFMPEG_LIBRARIES
                    FFMPEG_DEFINITIONS)
 
+else ()
+  # Set the noncached _FOUND vars for the components.
+  foreach (_component ${_FFmpeg_ALL_COMPONENTS})
+    set_component_found(${_component})
+  endforeach ()
 endif ()
 
-# Now set the noncached _FOUND vars for the components.
-foreach (_component AVCODEC AVDEVICE AVFORMAT AVUTIL POSTPROCESS SWSCALE)
-  set_component_found(${_component})
-endforeach ()
-
 # Compile the list of required vars
-set(_FFmpeg_REQUIRED_VARS FFMPEG_LIBRARIES FFMPEG_INCLUDE_DIRS)
+unset(_FFmpeg_REQUIRED_VARS)
+set(_FFmpeg_FOUND_LIBRARIES "")
 foreach (_component ${FFmpeg_FIND_COMPONENTS})
-  list(APPEND _FFmpeg_REQUIRED_VARS ${_component}_LIBRARIES ${_component}_INCLUDE_DIRS)
+  if (${_component}_FOUND)
+    if (NOT WIN32)
+        if (${_component}_VERSION VERSION_LESS _FFmpeg_REQUIRED_VERSION)
+            message(STATUS "${_component}: ${${_component}_VERSION} < ${_FFmpeg_REQUIRED_VERSION}")
+            unset(${_component}_FOUND)
+        endif ()
+    else (NOT WIN32)
+        message(WARNING "${_component}: Version check is not supported on Windows")
+    endif(NOT WIN32)
+    list(APPEND _FFmpeg_FOUND_LIBRARIES ${${_component}_LIBRARIES})
+  endif ()
+  list(APPEND _FFmpeg_REQUIRED_VARS ${_component}_LIBRARIES ${_component}_INCLUDE_DIRS ${_component}_FOUND)
 endforeach ()
+list(INSERT _FFmpeg_REQUIRED_VARS 0 _FFmpeg_FOUND_LIBRARIES)
 
 # Give a nice error message if some of the required vars are missing.
-find_package_handle_standard_args(FFmpeg DEFAULT_MSG ${_FFmpeg_REQUIRED_VARS})
+find_package_handle_standard_args(FFmpeg
+    REQUIRED_VARS ${_FFmpeg_REQUIRED_VARS}
+    HANDLE_COMPONENTS)

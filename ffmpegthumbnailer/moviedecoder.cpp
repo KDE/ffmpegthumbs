@@ -12,6 +12,7 @@
 
 extern "C" {
 #include <libswscale/swscale.h>
+#include <libavcodec/version.h>
 #include <libavutil/display.h>
 #include <libavutil/imgutils.h>
 }
@@ -89,7 +90,11 @@ void MovieDecoder::destroy()
 {
     deleteFilterGraph();
     if (m_pVideoCodecContext) {
+#if LIBAVCODEC_VERSION_MAJOR >= 60
+        avcodec_free_context(&m_pVideoCodecContext);
+#else
         avcodec_close(m_pVideoCodecContext);
+#endif
         m_pVideoCodecContext = nullptr;
     }
     m_pVideoStream = nullptr;
@@ -215,7 +220,11 @@ void MovieDecoder::seek(int timeInSeconds)
         }
 
         ++keyFrameAttempts;
+#if LIBAVCODEC_VERSION_MAJOR >= 60
+    } while ((!gotFrame || !(m_pFrame->flags & AV_FRAME_FLAG_KEY)) && keyFrameAttempts < 200);
+#else
     } while ((!gotFrame || !m_pFrame->key_frame) && keyFrameAttempts < 200);
+#endif
 
     if (gotFrame == 0) {
         qCDebug(ffmpegthumbs_LOG) << "Seeking in video failed";
@@ -263,15 +272,29 @@ QImageIOHandler::Transformations MovieDecoder::transformations()
         return ret;
     }
 
+#if LIBAVCODEC_VERSION_MAJOR >= 60
+    for (int i=0; i<m_pVideoStream->codecpar->nb_coded_side_data; i++) {
+        if (m_pVideoStream->codecpar->coded_side_data[i].type != AV_PKT_DATA_DISPLAYMATRIX) {
+#else
     for (int i=0; i<m_pVideoStream->nb_side_data; i++) {
         if (m_pVideoStream->side_data[i].type != AV_PKT_DATA_DISPLAYMATRIX) {
+#endif
             continue;
         }
+#if LIBAVCODEC_VERSION_MAJOR >= 60
+        if (m_pVideoStream->codecpar->coded_side_data[i].size != sizeof(int32_t) * 9) {
+            qCWarning(ffmpegthumbs_LOG) << "Invalid display matrix size" << m_pVideoStream->codecpar->coded_side_data[i].size << "expected" << sizeof(int32_t) * 9;
+#else
         if (m_pVideoStream->side_data[i].size != sizeof(int32_t) * 9) {
             qCWarning(ffmpegthumbs_LOG) << "Invalid display matrix size" << m_pVideoStream->side_data[i].size << "expected" << sizeof(int32_t) * 9;
+#endif
             continue;
         }
+#if LIBAVCODEC_VERSION_MAJOR >= 60
+        int32_t *matrix = reinterpret_cast<int32_t*>(m_pVideoStream->codecpar->coded_side_data[i].data);
+#else
         int32_t *matrix = reinterpret_cast<int32_t*>(m_pVideoStream->side_data[i].data);
+#endif
         double rotation = av_display_rotation_get(matrix);
         if (qFuzzyCompare(rotation, 0.)) {
             ret |= QImageIOHandler::TransformationNone;
@@ -404,7 +427,11 @@ bool MovieDecoder::processFilterGraph(AVFrame *dst, const AVFrame *src,
 
 void MovieDecoder::getScaledVideoFrame(int scaledSize, bool maintainAspectRatio, VideoFrame& videoFrame)
 {
+#if LIBAVCODEC_VERSION_MAJOR >= 60
+    if (m_pFrame->flags & AV_FRAME_FLAG_INTERLACED) {
+#else
     if (m_pFrame->interlaced_frame) {
+#endif
         processFilterGraph((AVFrame*) m_pFrame, (AVFrame*) m_pFrame, m_pVideoCodecContext->pix_fmt,
                               m_pVideoCodecContext->width, m_pVideoCodecContext->height);
     }

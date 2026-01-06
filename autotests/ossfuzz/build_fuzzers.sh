@@ -8,6 +8,9 @@
 export PATH="$WORK/bin:$WORK/libexec:$PATH"
 export PKG_CONFIG="$(which pkg-config) --static"
 export PKG_CONFIG_PATH="$WORK/lib/pkgconfig:$WORK/share/pkgconfig:$WORK/lib/x86_64-linux-gnu/pkgconfig"
+if [[ $FUZZING_ENGINE == "afl" ]]; then
+    export LDFLAGS="-fuse-ld=lld"
+fi
 
 # For FFMpegThumbnailer
 cd $SRC/ffmpeg

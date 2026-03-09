@@ -14,17 +14,12 @@ fi
 
 # For FFMpegThumbnailer
 cd $SRC/ffmpeg
-if [ "$SANITIZER" = "memory" ]; then
-  disable_asm="--disable-inline-asm --disable-x86asm"
-else
-  disable_asm=
-fi
 ./configure \
   --cc="$CC" \
   --cxx="$CXX" \
   --ld="$CXX $CXXFLAGS -std=c++11" \
   --prefix=$WORK \
-  $disable_asm \
+  --disable-asm \
   --enable-static \
   --disable-shared \
   --disable-doc \

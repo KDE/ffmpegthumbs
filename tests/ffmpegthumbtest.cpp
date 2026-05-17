@@ -22,13 +22,20 @@ int main(int argc, char **argv)
 
     if (arguments.count() > 1) {
         QString inputFilename(arguments.last());
+        QFileInfo fileInfo(inputFilename);
+
         FFMpegThumbnailer thumbnailer(&app, QVariantList());
+
         QMimeDatabase db;
         const QString mime = db.mimeTypeForFile(inputFilename).name();
-        KIO::ThumbnailRequest request(QUrl::fromLocalFile(inputFilename), QSize(128, 128), mime, 0, 0);
-        const auto res = thumbnailer.create(request);
-        QFileInfo fileInfo(inputFilename);
-        res.image().save(fileInfo.baseName() + QStringLiteral(".png"));
+        const quint16 sizes[] = {96, 192, 384, 768, 1536};
+
+        for (quint16 size : sizes)
+        {
+            KIO::ThumbnailRequest request(QUrl::fromLocalFile(inputFilename), QSize(size, size), mime, 0, 0);
+            const auto res = thumbnailer.create(request);
+            res.image().save(fileInfo.baseName() + QStringLiteral("_%1.png").arg(size));
+        }
     } else {
         cout << "Usage:" << arguments.at(0).toLocal8Bit().data() << " filename" << endl;
     }

@@ -417,7 +417,7 @@ void MovieDecoder::getScaledVideoFrame(int scaledSize, bool maintainAspectRatio,
     videoFrame.lineSize = m_pFrame->linesize[0];
 
     videoFrame.frameData.clear();
-    const auto frameSize = videoFrame.lineSize * videoFrame.height;
+    const size_t frameSize = static_cast<size_t>(videoFrame.lineSize) * static_cast<size_t>(videoFrame.height);
     if (frameSize < 1) {
         return; // calling front() on an empty vector is undefined behavior; return empty frame data instead
     }

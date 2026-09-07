@@ -30,6 +30,7 @@
   <name xml:lang="id">FFmpeg Thumbnailer</name>
   <name xml:lang="is">FFmpeg smámyndagerð</name>
   <name xml:lang="it">Generatore di miniature FFmpeg</name>
+  <name xml:lang="ja">FFmpeg サムネイル生成アドオン</name>
   <name xml:lang="ka">FFmpeg-ით მინიატურების შექმნა</name>
   <name xml:lang="ko">FFmpeg 섬네일 생성기</name>
   <name xml:lang="lt">FFmpeg miniatiūrų kūrimo įrankis</name>
@@ -73,6 +74,7 @@
   <summary xml:lang="id">Penghasil thumbnail video menggunakan FFmpeg</summary>
   <summary xml:lang="is">Gerð smámynda úr myndskeiðum með FFmpeg</summary>
   <summary xml:lang="it">Generatore di miniature video che usa FFmpeg</summary>
+  <summary xml:lang="ja">FFmpeg を利用したビデオのサムネイル生成ツール</summary>
   <summary xml:lang="ka">FFmpeg-ით ვიდეო მინიატურების შექმნა</summary>
   <summary xml:lang="ko">FFmpeg를 사용하여 동영상 섬네일 생성</summary>
   <summary xml:lang="lt">Vaizdo įrašų miniatiūrų gamintojas naudojantis FFmpeg</summary>
@@ -117,6 +119,7 @@
     <p xml:lang="id">FFmpeg Thumbnailer adalah sebuah penghasil thumbnail video untuk pengelolaan file KDE.</p>
     <p xml:lang="is">FFmpeg smámyndagerð útbýr smámyndir úr myndskeiðum fyrir skráastjóra KDE.</p>
     <p xml:lang="it">Il generatore di miniature FFmpeg è un generatore di miniature video per i gestori di file di KDE.</p>
+    <p xml:lang="ja">FFmpeg サムネイル生成アドオンは、KDE ファイルマネージャー用のビデオサムネイル生成ツールです。</p>
     <p xml:lang="ka">FFmpeg მემინიატურე KDE-ის ფაილის მმართველებისთვის ვიდეოდან სურათებს იღებს.</p>
     <p xml:lang="ko">FFmpeg 섬네일 생성기는 KDE 파일 관리자의 동영상 섬네일 생성기입니다.</p>
     <p xml:lang="lt">FFmpeg miniatiūrų kūrimo įrankis yra vaizdo įrašų miniatiūrų gamintojas, skirtas KDE failų tvarkytuvėms.</p>

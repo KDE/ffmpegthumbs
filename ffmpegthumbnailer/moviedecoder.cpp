@@ -10,6 +10,8 @@
 #include <QDebug>
 #include <QFileInfo>
 
+#include <limits>
+
 extern "C" {
 #include <libswscale/swscale.h>
 #include <libavutil/display.h>
@@ -174,8 +176,9 @@ int MovieDecoder::getHeight()
 
 int MovieDecoder::getDuration()
 {
-    if (m_pFormatContext) {
-        return static_cast<int>(m_pFormatContext->duration / AV_TIME_BASE);
+    // The duration is AV_NOPTS_VALUE if it is unknown, e.g. for raw elementary streams
+    if (m_pFormatContext && m_pFormatContext->duration > 0) {
+        return static_cast<int>(qMin<int64_t>(m_pFormatContext->duration / AV_TIME_BASE, std::numeric_limits<int>::max()));
     }
 
     return 0;

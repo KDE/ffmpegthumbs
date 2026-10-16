@@ -94,7 +94,7 @@ void VideoThumbnailer::generateThumbnail(const QString& videoFile, ImageWriter& 
         }
         
         if ((!m_WorkAroundIssues) || (movieDecoder.getCodec() != QLatin1String("h264"))) { //workaround for bug in older ffmpeg (100% cpu usage when seeking in h264 files)
-            int secondToSeekTo = m_SeekTime.isEmpty() ? movieDecoder.getDuration() * m_SeekPercentage / 100 : timeToSeconds(m_SeekTime);
+            int secondToSeekTo = m_SeekTime.isEmpty() ? static_cast<int>(static_cast<qint64>(movieDecoder.getDuration()) * m_SeekPercentage / 100) : timeToSeconds(m_SeekTime);
             movieDecoder.seek(secondToSeekTo);
         }
     

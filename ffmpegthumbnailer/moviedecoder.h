@@ -44,6 +44,10 @@ public:
     QImageIOHandler::Transformations transformations();
 
 private:
+    // Largest frame the decoders may allocate, 16384x8192 still covers 16K equirectangular videos.
+    // Without a limit, a small file can declare a resolution that makes the decoder allocate gigabytes.
+    static constexpr int64_t MAX_FRAME_PIXELS = 16384 * 8192;
+
     bool initializeVideo();
 
     bool decodeVideoPacket();

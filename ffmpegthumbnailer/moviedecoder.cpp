@@ -9,6 +9,7 @@
 
 #include <QDebug>
 #include <QFileInfo>
+#include <vector>
 
 #include <limits>
 
@@ -65,7 +66,18 @@ void MovieDecoder::initialize(const QString& filename)
         return;
     }
 
-    if (avformat_find_stream_info(m_pFormatContext, nullptr) < 0) {
+    // avformat_find_stream_info() decodes frames with its own decoders, which need the limit as well
+    std::vector<AVDictionary*> streamOptions(m_pFormatContext->nb_streams, nullptr);
+    for (AVDictionary*& options : streamOptions) {
+        av_dict_set_int(&options, "max_pixels", MAX_FRAME_PIXELS, 0);
+    }
+
+    const int ret = avformat_find_stream_info(m_pFormatContext, streamOptions.empty() ? nullptr : streamOptions.data());
+    for (AVDictionary*& options : streamOptions) {
+        av_dict_free(&options);
+    }
+
+    if (ret < 0) {
         qCDebug(ffmpegthumbs_LOG) << "Could not find stream information";
         return;
     }
@@ -138,6 +150,7 @@ bool MovieDecoder::initializeVideo()
     m_pVideoCodecContext = avcodec_alloc_context3(m_pVideoCodec);
     m_pVideoStream = m_pFormatContext->streams[m_VideoStream];
     avcodec_parameters_to_context(m_pVideoCodecContext, m_pVideoStream->codecpar);
+    m_pVideoCodecContext->max_pixels = MAX_FRAME_PIXELS;
 
     if (m_pVideoCodec == nullptr) {
         // set to nullptr, otherwise avcodec_close(m_pVideoCodecContext) crashes
